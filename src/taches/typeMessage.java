@@ -16,6 +16,7 @@ public enum typeMessage {
 	 * Message<String>
 	 * message : le hash de la publication
 	 * peerConcerne : le peer qui l'a publiée
+	 * mboxRponse à renseigner
 	 */
 	requete_publication,
 	

@@ -25,7 +25,7 @@ public class Message<T> extends Task{
 	 * Certains messages peuvent se separer en une action, et le nom du peer pour lequel on fait cette action.
 	 * Dans ce cas on peut ce servir de l'attribut peerConcerne. Sinon on ne s'en sert pas
 	 */	
-	private String peerConcerne ="";
+	private String peerConcerne =null;
 	
 	/**
 	 * Lorsque l'on repond a une requete, on precisera le hash du l'objet Message auquel on repond.
@@ -37,7 +37,7 @@ public class Message<T> extends Task{
 	/**
 	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment lors des requetes aux superpeers.
 	 */
-	private String mboxReponse;
+	private String mboxReponse=null;
 	
 	/**
 	 * La payload du message.

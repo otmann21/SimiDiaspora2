@@ -39,8 +39,6 @@ public class GestionContenu extends Process{
 		super(host,name,args);
 
 		this.mbox = host.getName()+"_GestionContenu";
-
-
 	}
 
 	public void main(String[] args) throws MsgException {
