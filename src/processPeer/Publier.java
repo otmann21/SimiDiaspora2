@@ -17,6 +17,7 @@ import taches.typeMessage;
 
 /**
  * Le peer envoie une publication a son spContenu, et si spContenu lui repond ok, il notifie son spMur.
+ * PB : Les commandes sleep ne finissent pas.
  * Puis il exit.
  * 
  * @author otmann

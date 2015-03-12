@@ -17,6 +17,8 @@ import taches.typeMessage;
 /**
  * Ce process va stocker les publications des utilisateurs.
  * 
+ * PB : dans le main, on rentre dans la condition du Task.listen, mais le Task.receive ne finit pas.
+ * 
  * @author otmann
  *
  */
