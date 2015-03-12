@@ -2,7 +2,7 @@
 <!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid.dtd">
 <platform version="3">
         <!--add your mapping between process and hosts here-->
-        <process host="" function="">
-                <argument value="" />
-        </process>
+        <process host="superpeer0" function="processSuperPeer.GestionContenu">
+<!--                 <argument value="" />
+ -->        </process>
 </platform>
