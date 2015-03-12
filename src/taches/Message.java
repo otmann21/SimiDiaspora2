@@ -25,7 +25,13 @@ public class Message<T> extends Task{
 	 * Certains messages peuvent se separer en une action, et le nom du peer pour lequel on fait cette action.
 	 * Dans ce cas on peut ce servir de l'attribut peerConcerne. Sinon on ne s'en sert pas
 	 */	
-	private String peerConcerne =null;
+	private String peerConcerne=null;
+	
+	/**
+	 * superPeerConcerne, même principe que peerConcerne
+	 */
+	
+	private String superPeerConcerne=null;
 	
 	/**
 	 * Lorsque l'on repond a une requete, on precisera le hash du l'objet Message auquel on repond.
@@ -118,5 +124,13 @@ public class Message<T> extends Task{
 
 	public void setMboxReponse(String mboxReponse) {
 		this.mboxReponse = mboxReponse;
+	}
+
+	public String getSuperPeerConcerne() {
+		return superPeerConcerne;
+	}
+
+	public void setSuperPeerConcerne(String superPeerConcerne) {
+		this.superPeerConcerne = superPeerConcerne;
 	}	
 }

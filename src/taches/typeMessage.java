@@ -21,10 +21,35 @@ public enum typeMessage {
 	requete_publication,
 	
 	/**
+	 * Message<String>
+	 * le spGestionContenu repond une publication
+	 */	
+	reponse_publication,
+	
+	/**
 	 * Lorsque l'un peer demande a supeerpeer_GestionContenu de s'ajouter une publication.
 	 * Message<String>
 	 * message : la publication
+	 */	
+	ajout_publication,
+	
+	/**
+	 * Message<String>
+	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur pour qu'il l'ajoute dans la liste de publications
 	 */
-	ajout_publication
+	maj_mur,
+	
+	/**
+	 * Le champ message n'est pas utilisé
+	 * Un peer demande le mur d'un utilisateur a un spGestionMur
+	 * Le peer dont on veut le mur est passé dans peerConcerne 
+	 */
+	requete_mur,
+	
+	/**
+	 * Message<ArrayList<String[]>>
+	 * Le spGestionMur renvoie la liste des publi de l'utilisateur qu'on a demandé
+	 */
+	reponseMur
 
 }
