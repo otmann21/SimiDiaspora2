@@ -17,6 +17,13 @@ public enum typeMessage {
 	 * message : le hash de la publication
 	 * peerConcerne : le peer qui l'a publiée
 	 */
-	requete_publication
+	requete_publication,
+	
+	/**
+	 * Lorsque l'un peer demande a supeerpeer_GestionContenu de s'ajouter une publication.
+	 * Message<String>
+	 * message : la publication
+	 */
+	ajout_publication
 
 }

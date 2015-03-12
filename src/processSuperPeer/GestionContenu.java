@@ -48,9 +48,14 @@ public class GestionContenu extends Process{
 				case requete_publication:
 					Message<String> requete = msg;
 					String publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
+					Message<String> reponse = new Message<String>(publication, requete);
+					reponse.isend(requete.getMboxReponse());					
+					break;
+				case ajout_publication:
+					Message<String> upload = msg;
+					ajoutContenu(upload.getMessage(), upload.getExpediteur());
 					break;
 				}
-				
 			}
 		}
 	}

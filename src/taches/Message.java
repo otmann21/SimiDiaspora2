@@ -35,6 +35,11 @@ public class Message<T> extends Task{
 	private int hashCodeMessagePrecedent = 0;
 	
 	/**
+	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment lors des requetes aux superpeers.
+	 */
+	private String mboxReponse;
+	
+	/**
 	 * La payload du message.
 	 */
 	private T message;
@@ -105,5 +110,13 @@ public class Message<T> extends Task{
 
 	public void setMessage(T message) {
 		this.message = message;
+	}
+
+	public String getMboxReponse() {
+		return mboxReponse;
+	}
+
+	public void setMboxReponse(String mboxReponse) {
+		this.mboxReponse = mboxReponse;
 	}	
 }
