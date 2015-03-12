@@ -6,6 +6,10 @@ import org.simgrid.msg.Msg;
 import org.simgrid.msg.Process;
 import org.simgrid.msg.Host;
 import org.simgrid.msg.MsgException;
+import org.simgrid.msg.Task;
+
+import taches.Message;
+import taches.typeMessage;
 
 /**
  * Ce process va stocker les publications des utilisateurs.
@@ -37,8 +41,18 @@ public class GestionContenu extends Process{
 	}
 
 	public void main(String[] args) throws MsgException {
-
-
+		while(true){
+			if(Task.listen(this.mbox)){
+				Message msg = (Message) Task.receive(this.mbox);
+				switch(msg.getType()){
+				case requete_publication:
+					Message<String> requete = msg;
+					String publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
+					break;
+				}
+				
+			}
+		}
 	}
 
 	public void ajoutContenu(String Contenu, String expediteur){
