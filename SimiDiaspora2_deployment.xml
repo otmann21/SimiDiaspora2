@@ -1,8 +1,15 @@
 <?xml version='1.0'?>
 <!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid.dtd">
 <platform version="3">
-        <!--add your mapping between process and hosts here-->
-        <process host="superpeer0" function="processSuperPeer.GestionContenu">
-<!--                 <argument value="" />
- -->        </process>
+	<!--add your mapping between process and hosts here -->
+	<process host="superpeer0" function="processSuperPeer.GestionContenu">
+	</process>
+	<process host="superpeer0" function="processSuperPeer.GestionMur">
+	</process>
+	<process host="peer0" function="processPeer.Publier">
+		<argument value="500" />
+		<argument value="Otmann est cool" />
+		<argument value="superpeer0" />
+		<argument value="superpeer0" />
+	</process>
 </platform>

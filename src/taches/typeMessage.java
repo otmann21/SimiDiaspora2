@@ -36,6 +36,7 @@ public enum typeMessage {
 	/**
 	 * Message<String>
 	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur pour qu'il l'ajoute dans la liste de publications
+	 * Utilise superPeerConcerne pour dire sur quel spContenu est la publi
 	 */
 	maj_mur,
 	

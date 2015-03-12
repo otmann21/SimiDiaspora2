@@ -1,12 +1,19 @@
 # SimiDiaspora2
 
 Process superpeer:
+
 LienAmities : Hugo
+
 GestionContenu : Otmann
+
 GestionMurs : Otmann
 
+
+
 Process peers:
+
 Consulter : Hugo
+
 Publier : Otmann
 
 
