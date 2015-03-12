@@ -14,10 +14,10 @@ public class Message<T> extends Task{
 	
 	
 	/**
-	 * Le type est une chaine de caractere qui va définir la fonction qu'a le message.
-	 * Il faut enumerer tous les types utilisés ici, pour en avoir une liste
+	 * Le type va définir la fonction qu'a le message.
+	 * Tous les types utlisés sont listés dans l'enum typeMessage.
 	 */
-	private String type;
+	private typeMessage type;
 	private String expediteur;
 	private String destinataire;
 	
@@ -67,11 +67,11 @@ public class Message<T> extends Task{
 		this.expediteur = expediteur;
 	}
 
-	public String getType() {
+	public typeMessage getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(typeMessage type) {
 		this.type = type;
 	}
 
