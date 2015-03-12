@@ -38,6 +38,7 @@ public class GestionContenu extends Process{
 	public GestionContenu(Host host, String name, String[]args) {
 		super(host,name,args);
 
+		this.donnees = new HashMap<String, HashMap<String, String>>();
 		this.mbox = host.getName()+"_GestionContenu";
 	}
 
@@ -50,6 +51,8 @@ public class GestionContenu extends Process{
 					Message<String> requete = msg;
 					String publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
 					Message<String> reponse = new Message<String>(publication, requete);
+					reponse.setType(typeMessage.reponse_publication);
+					
 					reponse.isend(requete.getMboxReponse());					
 					break;
 				case ajout_publication:
