@@ -50,6 +50,12 @@ public enum typeMessage {
 	 * Message<ArrayList<String[]>>
 	 * Le spGestionMur renvoie la liste des publi de l'utilisateur qu'on a demandé
 	 */
-	reponseMur
+	reponseMur,
+	
+	/**
+	 * Message<Boolean>
+	 * Un simple boolean pour dire si une requete a été correctement traitée.
+	 */
+	confirmation
 
 }

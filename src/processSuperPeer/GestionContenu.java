@@ -58,6 +58,9 @@ public class GestionContenu extends Process{
 				case ajout_publication:
 					Message<String> upload = msg;
 					ajoutContenu(upload.getMessage(), upload.getExpediteur());
+					Message<Boolean> confirmation = new Message<Boolean>(true, upload);
+					confirmation.setType(typeMessage.confirmation);
+					confirmation.isend(upload.getMboxReponse());
 					break;
 				}
 			}
