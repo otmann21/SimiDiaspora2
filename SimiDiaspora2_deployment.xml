@@ -4,8 +4,8 @@
 	<!--add your mapping between process and hosts here -->
 	<process host="superpeer0" function="processSuperPeer.GestionContenu">
 	</process>
-	<process host="superpeer0" function="processSuperPeer.GestionMur">
-	</process>
+<!-- 	<process host="superpeer0" function="processSuperPeer.GestionMur">
+	</process> -->
 	<process host="peer0" function="processPeer.Publier">
 		<argument value="500" />
 		<argument value="Otmann est cool" />
