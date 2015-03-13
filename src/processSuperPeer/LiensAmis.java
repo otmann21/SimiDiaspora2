@@ -1,16 +1,6 @@
 package processSuperPeer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.simgrid.msg.Msg;
-import org.simgrid.msg.Process;
-import org.simgrid.msg.Host;
-import org.simgrid.msg.MsgException;
-import org.simgrid.msg.Task;
-
-import taches.Message;
-import taches.typeMessage;
 
 public class LiensAmis {
 
@@ -30,7 +20,19 @@ public class LiensAmis {
 	 * 
 	 */
 	
+	public LiensAmis(int n){
+	}
 	
+	/**
+	 * Le constructeur prend seulement en argument le nombre de 
+	 * peers du réseau.
+	 * 
+	 * On rempli ensuite le tableau topo n * n de façon raisonnable,
+	 * plausible et un peu aléatoire. Par exemple en générant un nombre
+	 * d'amis aléatoire.
+	 * @param peer
+	 * @return
+	 */
 	public ArrayList<String[]> listeAmis(String peer){
 		ArrayList<String[]> liste = new ArrayList();
 		return liste;
@@ -68,7 +70,17 @@ public class LiensAmis {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-	}
-
+//boolean[][] tab = new boolean[10][10];
+//for(int i=0 ; i<10 ; i++){
+//	for (int j=0 ; j < 10 ; j++){
+//		tab[i][j] = true ;
+//	}
+//	}
+//	
+//System.out.println(tab[0][0]);
+//	
+//	
+		
+		
+		}
 }
