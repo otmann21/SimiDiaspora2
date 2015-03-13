@@ -14,12 +14,13 @@ import taches.typeMessage;
 
 
 /**
- * Ce process va stocker les wall d'utilisateurs.
+ * Ce process va stocker les walls d'utilisateurs.
  * Pour l'instant, ne verifie pas que les utilisateurs sont amis avant de repondre.
  * 
  * @author otmann
  *
  */
+
 public class GestionMur extends Process{
 
 	/**

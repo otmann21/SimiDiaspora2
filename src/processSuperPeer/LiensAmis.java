@@ -1,8 +1,21 @@
 package processSuperPeer;
 
 import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
-public class LiensAmis {
+import org.simgrid.msg.Msg;
+import org.simgrid.msg.Process;
+import org.simgrid.msg.Host;
+import org.simgrid.msg.MsgException;
+import org.simgrid.msg.Task;
+
+import taches.Message;
+import taches.typeMessage;
+ 
+public class LiensAmis extends Process{
 
 	/** Ce process gère les liens d'amitiés du réseau entier.
 	 * C'est le seul process  complètement centralisé.
@@ -87,7 +100,7 @@ public class LiensAmis {
 	 * @param args
 	 */
 
-	public static void main(String[] args) {
+	public void main(String[] args) throws MsgException{
 		// TODO Auto-generated method stub
 		//boolean[][] tab = new boolean[10][10];
 		//for(int i=0 ; i<10 ; i++){

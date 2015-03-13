@@ -21,7 +21,8 @@ public class Publier extends Process {
 	public Publier(Host host, String name, String[]args){
 		super(host,name,args);
 		
-		//Les attributs devront être initialisées a partir d'argument passés dans le deployment.xml
+		//Les attributs devront être initialisées a partir 
+		//d'argument passés dans le deployment.xml.
 
 	}
 	public void main(String[] arg0) throws MsgException {
