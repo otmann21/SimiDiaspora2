@@ -34,6 +34,13 @@ public class GestionMur extends Process{
 	 * 'nomHost' + '_GestionMur'
 	 */
 	private String mbox;
+	/**
+	 * c'est quoi au juste une boite au lettres, on en avait pas vraiment parlé. J'en 
+	 * ai besoin moi aussi dans mes process ?
+	 * @param host
+	 * @param name
+	 * @param args
+	 */
 	
 	public GestionMur(Host host, String name, String[]args) {
 		super(host,name,args);

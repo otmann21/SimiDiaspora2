@@ -22,9 +22,12 @@ public class Message<T> extends Task{
 	private String destinataire;
 	
 	/**
-	 * Certains messages peuvent se separer en une action, et le nom du peer pour lequel on fait cette action.
-	 * Dans ce cas on peut ce servir de l'attribut peerConcerne. Sinon on ne s'en sert pas
+	 * Certains messages peuvent se separer en une action, et le nom du peer pour 
+	 * lequel on fait cette action.
+	 * Dans ce cas on peut se servir de l'attribut peerConcerne. Sinon on ne 
+	 * s'en sert pas
 	 */	
+	
 	private String peerConcerne=null;
 	
 	/**
@@ -34,20 +37,26 @@ public class Message<T> extends Task{
 	private String superPeerConcerne=null;
 	
 	/**
-	 * Lorsque l'on repond a une requete, on precisera le hash du l'objet Message auquel on repond.
-	 * Le hash en question sera celui donné par la méthode hashCode() de la classe Object.
-	 * Par défaut cet attribut vaut 0, dans le cas où ce n'est pas une réponse, mais le début de la communication.
+	 * Lorsque l'on repond a une requete, on precisera le hash de l'objet Message 
+	 * auquel on repond.
+	 * Le hash en question sera celui donné par la méthode hashCode() de la classe 
+	 * Object.
+	 * Par défaut cet attribut vaut 0, dans le cas où ce n'est pas une réponse, 
+	 * mais le début de la communication.
 	 */
+	
 	private int hashCodeMessagePrecedent = 0;
 	
 	/**
-	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment lors des requetes aux superpeers.
+	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment 
+	 * lors des requetes aux superpeers.
 	 */
 	private String mboxReponse=null;
 	
 	/**
 	 * La payload du message.
 	 */
+	
 	private T message;
 	
 	public Message(){
@@ -60,7 +69,8 @@ public class Message<T> extends Task{
 	}	
 	
 	/**
-	 * Ce constructeur permet de directement indiquer que le message est une reponse au message 'precedent'.
+	 * Ce constructeur permet de directement indiquer que le message est une 
+	 * reponse au message 'precedent'.
 	 * @param message
 	 * @param precedent
 	 */

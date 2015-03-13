@@ -6,7 +6,7 @@ import org.simgrid.msg.Host;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Process;
 
-public class Consulter {
+public class Consulter extends Process{
 
 	int offset ; //decalage permettant la bonne synchronisation.
 	
@@ -18,8 +18,9 @@ public class Consulter {
 	
 	/**
 	 * C'est un annuaire. 
-	 * attribut contenant la liste des couples (amis,SPWall)
+	 * attribut contenant la liste des couples (peers,SPWall)
 	 * Comment l'initialiser ? Il faut utiliser les fichiers xml de simgrid.
+	 * Le peer_i est en position i dans la liste.
 	 */
 
 	public ArrayList <String[]> recupereMur(String peer, String SPWall){
@@ -37,7 +38,13 @@ public class Consulter {
 		return liste ;
 	}
 	
-	public static void main(String[] args) {
+	public Consulter(Host host, String name, String[] args){
+		//mais je ne comprends pas pourquoi je fais ça.
+		// Ah oui, déjà on précise l'hôte sur lequel tourne le process. name ?? Args ??
+		super(host, name, args);
+	}
+	
+	public void main(String[] args) throws MsgException{
 		// TODO Auto-generated method stub
 
 	}

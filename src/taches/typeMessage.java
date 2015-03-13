@@ -35,9 +35,10 @@ public enum typeMessage {
 	
 	/**
 	 * Message<String>
-	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur pour qu'il l'ajoute dans la liste de publications
+	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur 
+	 * pour qu'il l'ajoute dans la liste de publications
 	 */
-	maj_mur,
+	maj_mur, //que signifie ce nom, maj ?
 	
 	/**
 	 * Le champ message n'est pas utilisé
@@ -50,6 +51,20 @@ public enum typeMessage {
 	 * Message<ArrayList<String[]>>
 	 * Le spGestionMur renvoie la liste des publi de l'utilisateur qu'on a demandé
 	 */
-	reponseMur
+	reponseMur,
+	
+	verif_ami,
+	
+	/**
+	 * on utilise le message verif_ami lorsque l'on demande si i et j sont bien amis
+	 * au process SP qui gère les liens d'amitié.
+	 */
+	
+	liste_ami
+	
+	/**
+	 * on utilise le type de message liste_ami quand on veut connaître la liste
+	 * des amis d'un pair donné.
+	 */
 
 }

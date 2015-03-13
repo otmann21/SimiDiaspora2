@@ -32,8 +32,17 @@ public class LiensAmis extends Process{
 	 * amis, faux sinon.
 	 * 
 	 */
+	private String mbox;
+	int nbPeers ; 
 
-	public LiensAmis(int n){
+	public LiensAmis(Host host, String name, String[]args){
+		super(host, name, args);
+		
+		int n = Integer.parseInt(args[0]);
+		/**
+		 * On doit donner en premier argument de args le nombre de pairs du réseau.
+		 */
+		this.nbPeers = n ;
 		this.topo = new boolean [n][n] ;
 
 		for(int i=0 ; i<n;i++){ // on met tout le monde à false.
@@ -65,6 +74,17 @@ public class LiensAmis extends Process{
 	
 	public ArrayList<String[]> listeAmis(String peer){
 		ArrayList<String[]> liste = new ArrayList();
+		
+		int nbAmis = 0;
+		int pair = this.entierPeer(peer);
+			//on parcours la ième ligne et on regarde les amis de peeri.
+			for (int j = 0 ; j < this.nbPeers ; j++){
+				if (topo[pair][j]){
+					String[] ami = {"peer" + j, "SPWall"};
+					liste.add(nbAmis, ami);
+					nbAmis++;
+				}
+		}
 		return liste;
 	}
 
@@ -102,19 +122,16 @@ public class LiensAmis extends Process{
 
 	public void main(String[] args) throws MsgException{
 		// TODO Auto-generated method stub
-		//boolean[][] tab = new boolean[10][10];
-		//for(int i=0 ; i<10 ; i++){
-		//	for (int j=0 ; j < 10 ; j++){
-		//		tab[i][j] = true ;
-		//	}
-		//	}
-		//	
-		//System.out.println(tab[0][0]);
-		//	
-		//	
-		//LiensAmis l = new LiensAmis(3);
-		//		int j = l.entierPeer("peer54");
-		//		
-		//System.out.println(j);
+		while(true){
+			if (Task.listen(this.mbox)){
+				Message msg = (Message) Task.receive(this.mbox);
+				switch(msg.getType()){
+				case verif_ami:
+					break;
+				case liste_ami:
+					break;
+				}
+			}
+		}
 	}
 }
