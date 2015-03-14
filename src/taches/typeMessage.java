@@ -38,7 +38,7 @@ public enum typeMessage {
 	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur pour qu'il l'ajoute dans la liste de publications
 	 * Utilise superPeerConcerne pour dire sur quel spContenu est la publi
 	 */
-	maj_mur,
+	maj_mur, //que signifie ce nom, maj ?
 	
 	/**
 	 * Le champ message n'est pas utilisé
@@ -57,6 +57,21 @@ public enum typeMessage {
 	 * Message<Boolean>
 	 * Un simple boolean pour dire si une requete a été correctement traitée.
 	 */
-	confirmation
+	confirmation,
+
+
+	verif_ami,
+	
+	/**
+	 * on utilise le message verif_ami lorsque l'on demande si i et j sont bien amis
+	 * au process SP qui gère les liens d'amitié.
+	 */
+	
+	liste_ami
+	
+	/**
+	 * on utilise le type de message liste_ami quand on veut connaître la liste
+	 * des amis d'un pair donné.
+	 */
 
 }

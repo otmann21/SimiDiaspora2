@@ -27,7 +27,8 @@ public class GestionContenu extends Process{
 
 	/**
 	 * Dans la Hashmap de haut niveau, les clés sont les noms des utilisateurs.
-	 * Dans les petites Hashmaps, les clés sont des hash de publications, et les valeurs sont les publications.
+	 * Dans les petites Hashmaps, les clés sont des hash de publications, 
+	 * et les valeurs sont les publications.
 	 */
 	HashMap<String, HashMap<String, String>> donnees;
 
