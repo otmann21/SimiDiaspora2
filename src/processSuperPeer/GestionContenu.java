@@ -17,6 +17,8 @@ import taches.typeMessage;
 /**
  * Ce process va stocker les publications des utilisateurs.
  * 
+ * PB : dans le main, on rentre dans la condition du Task.listen, mais le Task.receive ne finit pas.
+ * 
  * @author otmann
  *
  */
@@ -59,6 +61,9 @@ public class GestionContenu extends Process{
 				case ajout_publication:
 					Message<String> upload = msg;
 					ajoutContenu(upload.getMessage(), upload.getExpediteur());
+					Message<Boolean> confirmation = new Message<Boolean>(true, upload);
+					confirmation.setType(typeMessage.confirmation);
+					confirmation.isend(upload.getMboxReponse());
 					break;
 				}
 			}

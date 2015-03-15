@@ -1,5 +1,6 @@
 package taches;
 
+import org.simgrid.msg.Host;
 import org.simgrid.msg.Task;
 
 /**
@@ -63,11 +64,14 @@ public class Message<T> extends Task{
 	
 	public Message(){
 		super();
+		this.expediteur = Host.currentHost().getName();
 	}
 	
 	public Message(T message){
 		super();
 		this.message=message;
+		this.expediteur = Host.currentHost().getName();
+
 	}	
 	
 	/**
@@ -80,6 +84,8 @@ public class Message<T> extends Task{
 		super();
 		this.message=message;
 		this.hashCodeMessagePrecedent = precedent.hashCode();
+		this.expediteur = Host.currentHost().getName();
+
 	}
 
 	public String getExpediteur() {

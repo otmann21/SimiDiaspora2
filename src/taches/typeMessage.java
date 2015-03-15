@@ -35,8 +35,8 @@ public enum typeMessage {
 	
 	/**
 	 * Message<String>
-	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur 
-	 * pour qu'il l'ajoute dans la liste de publications
+	 * Lorqu'un utilisateur poste qqch sur son mur, il doit prevenir son spGestionMur pour qu'il l'ajoute dans la liste de publications
+	 * Utilise superPeerConcerne pour dire sur quel spContenu est la publi
 	 */
 	maj_mur, //que signifie ce nom, maj ?
 	
@@ -53,6 +53,13 @@ public enum typeMessage {
 	 */
 	reponseMur,
 	
+	/**
+	 * Message<Boolean>
+	 * Un simple boolean pour dire si une requete a été correctement traitée.
+	 */
+	confirmation,
+
+
 	verif_ami,
 	
 	/**

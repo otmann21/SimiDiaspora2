@@ -65,6 +65,9 @@ public class GestionMur extends Process{
 				case maj_mur:
 					Message<String> maj = msg;
 					ajoutPublicationDansMur(maj.getExpediteur(), maj.getMessage(), maj.getSuperPeerConcerne());
+					Message<Boolean> confirmation = new Message<Boolean>(true, maj);
+					confirmation.setType(typeMessage.confirmation);
+					confirmation.isend(maj.getMboxReponse());
 					break;
 				}
 			}
