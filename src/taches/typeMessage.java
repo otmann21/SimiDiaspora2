@@ -60,11 +60,15 @@ public enum typeMessage {
 	 * au process SP qui gère les liens d'amitié.
 	 */
 	
-	liste_ami
+	liste_ami,
 	
 	/**
 	 * on utilise le type de message liste_ami quand on veut connaître la liste
 	 * des amis d'un pair donné.
 	 */
+	
+	reponse_sontAmis,
+	
+	reponse_listeAmis
 
 }

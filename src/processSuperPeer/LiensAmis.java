@@ -127,8 +127,27 @@ public class LiensAmis extends Process{
 				Message msg = (Message) Task.receive(this.mbox);
 				switch(msg.getType()){
 				case verif_ami:
+					//récupération des arguments et appel de la méthode sontAmis.
+					Message<String> requete = msg;
+					String peer1 = requete.getPeerConcerne();
+					String peer2 = requete.getPeerConcerne2();
+					boolean rep = sontAmis(peer1, peer2);
+					
+					//création et envoi du message au SP.
+					Message reponse = new Message(rep);
+					reponse.setType(typeMessage.reponse_sontAmis);
+					reponse.isend(requete.getMboxReponse());					
 					break;
 				case liste_ami:
+					//récupération des arguments et appel de la méthode sontAmis.
+					Message<String> requete2 = msg;
+					String peer = requete2.getPeerConcerne();
+					ArrayList<String[]> rep2 = listeAmis(peer);
+					
+					//création et envoi du message au SP.
+					Message reponse2 = new Message(rep2);
+					reponse2.setType(typeMessage.reponse_listeAmis);
+					reponse2.isend(requete2.getMboxReponse());	
 					break;
 				}
 			}

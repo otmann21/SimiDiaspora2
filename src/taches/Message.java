@@ -30,8 +30,10 @@ public class Message<T> extends Task{
 	
 	private String peerConcerne=null;
 	
+	private String peerConcerne2=null;
 	/**
 	 * superPeerConcerne, même principe que peerConcerne
+	 * Il peut y avoir deux peers concernes, comme dans verif_amis (peer1, peer2).
 	 */
 	
 	private String superPeerConcerne=null;
@@ -142,5 +144,13 @@ public class Message<T> extends Task{
 
 	public void setSuperPeerConcerne(String superPeerConcerne) {
 		this.superPeerConcerne = superPeerConcerne;
+	}
+
+	public String getPeerConcerne2() {
+		return peerConcerne2;
+	}
+
+	public void setPeerConcerne2(String peerConcerne2) {
+		this.peerConcerne2 = peerConcerne2;
 	}	
 }
