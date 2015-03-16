@@ -51,16 +51,34 @@ son nom (i e son adresse), pour aller le trouver et faire les vérif.*/
 	}
 
 	public String recuperePubli(String hache, String SPContenu){
-		String publi = "publication par défaut";
+		
+		ArrayList mur2 = this.recupereMur(peer, this.spwall);
+		
+		//recherche du hache de l'élement dans le mur, on cherche son indice.
+		Iterator i = mur2.iterator();
+		ArrayList listeHache = new ArrayList();
+
+		while (i.hasNext()){
+			String[] el = (String[]) i.next();
+			String elHach = el[0];
+			listeHache.add(elHach);
+		}
+		
+		int indice = listeHache.indexOf(hache); //calcul de l'indice.
+		String[] couple = (String[]) listeHache.get(indice);
+		String publi = couple[1];
 		return publi ;
 	}
 
+	/**
+	 * La fonction retourner mur retourne toutes les publications du mur.
+	 * On appelle x fois la fonction recupere publi.
+	 * On n'envoie pas le resultat avec un message.
+	 * @param peer
+	 * @return
+	 */
 	public ArrayList <String> consulterMur(String peer){
 		ArrayList<String> liste = new ArrayList() ;
-
-		// on parcourt toutes les publications et on remplit la liste, 
-		// c'est à dire que l'on fait une boucle en lançant à chaque fois la méthode
-		//récuperePubli.
 
 		ArrayList mur = this.recupereMur(peer, this.spwall);
 		Iterator it = mur.iterator();
