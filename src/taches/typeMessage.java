@@ -15,7 +15,7 @@ public enum typeMessage {
 	 * Lorsque l'un peer demande a supeerpeer_GestionContenu une publication.
 	 * Message<String>
 	 * message : le hash de la publication
-	 * peerConcerne : le peer qui l'a publiee
+	 * peerConcerne : le peer qui l'a publiee, celui de qui on consulte le mur.
 	 * mboxRponse à renseigner
 	 */
 	requete_publication,
@@ -41,7 +41,7 @@ public enum typeMessage {
 	maj_mur,
 	
 	/**
-	 * Le champ message n'est pas utilise
+	 * Le champ message n'est pas utilise.
 	 * Un peer demande le mur d'un utilisateur a un spGestionMur
 	 * Le peer dont on veut le mur est passe dans peerConcerne 
 	 */

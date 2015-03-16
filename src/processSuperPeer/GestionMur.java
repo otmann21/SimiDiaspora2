@@ -55,9 +55,11 @@ public class GestionMur extends Process{
 				Message msg = (Message) Task.receive(this.mbox);
 				switch(msg.getType()){
 				case requete_mur:
+					// il reste a verifier avec LiensAmis que les deux peers sont bien potes.
 					Message<String> requete = msg;
 					ArrayList<String[]> mur = reponseMur(requete.getPeerConcerne());
 					Message<ArrayList<String[]>> reponse = new Message<ArrayList<String[]>>(mur, requete);
+					//on renvoit donc les couples (hache, SPContenu).
 					reponse.setType(typeMessage.reponseMur);
 					
 					reponse.isend(requete.getMboxReponse());

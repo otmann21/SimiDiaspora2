@@ -145,7 +145,7 @@ public class LiensAmis extends Process{
 					ArrayList<String[]> rep2 = listeAmis(peer);
 					
 					//création et envoi du message au SP.
-					Message reponse2 = new Message(rep2);
+					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2);
 					reponse2.setType(typeMessage.reponse_listeAmis);
 					reponse2.isend(requete2.getMboxReponse());	
 					break;

@@ -46,7 +46,7 @@ public class Consulter extends Process{
 		peer = args[1];
 	}
 	
-	/**recupere l'arraylist contenant le hache et le SPWall host de chaque publication.
+	/**recupere l'arraylist contenant le hache et le SPContenu de chaque publication.
 	 * Quand un peer demande à voir le mur de peer0 à GestionMur, 
 	 * celui-ci appelle la méthode recupere mur.
 	 */
@@ -55,8 +55,9 @@ public class Consulter extends Process{
 // ON commence par demander à SP LiensAmis la liste de ses amis. puis il demande a consulter le mur 
 		//du premier de ses amis.
 		
-		
-		///////////copie du code d'otmann
+	///////
+		//// distribuer le bon code dans les méthodes. ICi on a juste a renvoyer listePubli.
+		//////
 		Message<String> reqWall = new Message();	//creation du message de requete au SPWall.
 		reqWall.setType(typeMessage.requete_mur);
 		reqWall.setPeerConcerne(peer);
@@ -73,11 +74,11 @@ public class Consulter extends Process{
 				Message msg= (Message) Task.receive(mbox);
 				boolean resultat = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
 				if (resultat){
-					ArrayList<String[]> l2 = new ArrayList();
-					l2 = (ArrayList<String[]>) msg.getMessage();
+					ArrayList<String[]> listePubli = new ArrayList();
+					listePubli = (ArrayList<String[]>) msg.getMessage();
 					
 					//on prend ensuite tous les 2emes elements de la liste, qui represente la liste de SPContenus.
-					Iterator ind = l2.iterator();
+					Iterator ind = listePubli.iterator();
 					ArrayList<String> listeSpContenu = new ArrayList();
 
 					while (ind.hasNext()){
@@ -87,6 +88,33 @@ public class Consulter extends Process{
 					}
 					
 					//on contact tous les spContenu de la liste et on demande les publications.
+					Iterator indSp = l2.iterator();
+					ArrayList<String> listeContenu = new ArrayList();
+
+					while (indSp.hasNext()){
+						
+						Message<String> demandePubli = new Message<String>();
+						demandePubli.setMessage("");
+						demandePubli.setPeerConcerne("");
+						demandePubli.setMboxReponse("");
+						// ces attributs sont a renseigner.
+						
+						demandePubli.setType(typeMessage.requete_publication);
+						demandePubli.isend((String) indSp.next());
+						
+						try {
+							Message<String> publication= (Message) Task.receive(mbox);
+							boolean res = (publication.getType()==typeMessage.reponse_publication) && (publication.getHashCodeMessagePrecedent()==demandePubli.hashCode());
+							if (res){
+								ArrayList<String> listePubli = new ArrayList();
+								l2 = (ArrayList<String[]>) msg.getMessage();
+							}
+						}
+						
+						String[] el = (String[]) indSp.next();
+						String spContenu = el[1];
+						listeContenu.add(spContenu);
+					}
 				}
 				
 			} catch (TransferFailureException | HostFailureException
@@ -95,14 +123,13 @@ public class Consulter extends Process{
 				e.printStackTrace();
 			}
 		}
-		//////////
 		
 		ArrayList <String[]> liste = new ArrayList();
 		// on demande ensuite la liste au process gestion mur.
 
 		// cette methode envoie un message au process gestion mur. NON.
 
-		return liste ;
+		return listePubli ;
 	}
 
 	public String recuperePubli(String hache, String SPContenu){
