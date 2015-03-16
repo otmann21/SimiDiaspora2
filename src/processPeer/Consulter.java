@@ -52,15 +52,18 @@ public class Consulter extends Process{
 	 */
 	public ArrayList <String[]> recupereMur(String peer, String spWall){
 		// quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
-
-		///////////copie du code d'otman
+// ON commence par demander à SP LiensAmis la liste de ses amis. puis il demande a consulter le mur 
+		//du premier de ses amis.
+		
+		
+		///////////copie du code d'otmann
 		Message<String> reqWall = new Message();	//creation du message de requete au SPWall.
 		reqWall.setType(typeMessage.requete_mur);
 		reqWall.setPeerConcerne(peer);
 		reqWall.isend(spWall); //envoi du message au spWall, puis attente de sa réponse.
 		
 		try {
-			Process.sleep(100);
+			Process.sleep(100); //si ce temps n'est pas suffisant, on ajoutera du temps.
 		} catch (HostFailureException e) {
 			e.printStackTrace();
 		}
@@ -68,7 +71,24 @@ public class Consulter extends Process{
 		if(Task.listen(mbox)){
 			try {
 				Message msg= (Message) Task.receive(mbox);
-				resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==requetePublication.hashCode()) && ((Boolean) msg.getMessage());
+				boolean resultat = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
+				if (resultat){
+					ArrayList<String[]> l2 = new ArrayList();
+					l2 = (ArrayList<String[]>) msg.getMessage();
+					
+					//on prend ensuite tous les 2emes elements de la liste, qui represente la liste de SPContenus.
+					Iterator ind = l2.iterator();
+					ArrayList<String> listeSpContenu = new ArrayList();
+
+					while (ind.hasNext()){
+						String[] el = (String[]) ind.next();
+						String spContenu = el[1];
+						listeSpContenu.add(spContenu);
+					}
+					
+					//on contact tous les spContenu de la liste et on demande les publications.
+				}
+				
 			} catch (TransferFailureException | HostFailureException
 					| TimeoutException e) {
 				// TODO Auto-generated catch block
