@@ -87,14 +87,15 @@ public class GestionContenu extends Process{
 	public void main(String[] args) throws MsgException {
 		while(true){
 			if(Task.listen(this.mbox)){
-				Message msg = (Message) Task.receive(this.mbox);
+
+				Message msg = (Message) Task.receive(this.mbox);				
+				
 				switch(msg.getType()){
 				case requete_publication:
 					Message<String> requete = msg;
 					String publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
 					Message<String> reponse = new Message<String>(publication, requete);
 					reponse.setType(typeMessage.reponse_publication);
-					
 					reponse.isend(requete.getMboxReponse());					
 					break;
 				case ajout_publication:
@@ -104,20 +105,9 @@ public class GestionContenu extends Process{
 					confirmation.setType(typeMessage.confirmation);
 					confirmation.isend(upload.getMboxReponse());
 					break;
-				case verif_ami:
-					//message reçu et extraction des 2 arguments, les 2 pairs.
-					Message<String> rec = msg;
-					String peer1 = rec.getPeerConcerne();
-					String peer2 = rec.getPeerConcerne2();
-					
-					//Creation, evaluation et envoi du message de reponse contenant le booleen.
-					boolean verif;
-					Message<Boolean> amitie = new Message<Boolean> (verif(peer1, peer2));
-					amitie.setType(typeMessage.reponse_sontAmis);
-					amitie.isend(rec.getExpediteur());
-					break;
 				}
 			}
+			Process.sleep(100);
 		}
 	}
 

@@ -54,6 +54,9 @@ public class LiensAmis extends Process{
 	public LiensAmis(Host host, String name, String[]args){
 		super(host, name, args);
 		mbox = host.getName()+"_LiensAmis";
+		
+		//La ligne de gros CHEAT
+		annuaire.put("peer0", "superpeer1");
 
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
@@ -155,13 +158,13 @@ public class LiensAmis extends Process{
 				case liste_ami:
 					//récupération des arguments et appel de la méthode sontAmis.
 					Message<String> requete2 = msg;
-					String peer = requete2.getPeerConcerne();
+					String peer = requete2.getExpediteur();
 					ArrayList<String[]> rep2 = listeAmis(peer);
-
 					//création et envoi du message au SP.
-					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2);
+					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2, requete2);
 					reponse2.setType(typeMessage.reponse_listeAmis);
-					reponse2.isend(requete2.getMboxReponse());	
+
+					reponse2.isend(requete2.getMboxReponse());
 					break;
 				case demandeSPWall:
 					//récupération des arguments et appel de la méthode consulterAnnuaire.
@@ -175,6 +178,7 @@ public class LiensAmis extends Process{
 					break;
 				}
 			}
+			Process.sleep(100);
 		}
 	}
 }

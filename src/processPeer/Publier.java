@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.simgrid.msg.Host;
 import org.simgrid.msg.HostFailureException;
+import org.simgrid.msg.Msg;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Process;
 import org.simgrid.msg.Task;
@@ -33,7 +34,7 @@ public class Publier extends Process {
 
 	public Publier(Host host, String name, String[]args){
 		super(host,name,args);
-		
+
 		//Les attributs sont initialisées a partir d'argument passés dans le deployment.xml		
 		offset=Integer.parseInt(args[0]);
 		publication = args[1];
@@ -41,46 +42,40 @@ public class Publier extends Process {
 		spMur = args[3];
 		mbox = host.getName()+"_Publier";
 	}
-	
+
 	public void main(String[] arg0) throws MsgException {
-		Process.sleep(offset);
+		Process.sleep(100);
 		if(envoiPublication()) actualiseMur();
+		//		Task t = new Task();
+		//		t.send(spContenu+"_GestionContenu");
 	}
 
-	public boolean envoiPublication(){
-		
+	public boolean envoiPublication() throws TransferFailureException, HostFailureException, TimeoutException{
+
 		boolean resultat=false;
 		Message<String> requetePublication = new Message<String>(publication);
 		requetePublication.setType(typeMessage.ajout_publication);
 		requetePublication.setMboxReponse(this.mbox);
 		requetePublication.isend(spContenu+"_GestionContenu");
-		
-		//On laisse au superpeer le temps de faire la tache et renvoyer une confirmation
+
+		Process.sleep(100);
 		try {
-			Process.sleep(100);
-		} catch (HostFailureException e) {
+			Message msg= (Message) Task.receive(mbox);
+			resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==requetePublication.hashCode()) && ((Boolean) msg.getMessage());
+
+		} catch (TransferFailureException | HostFailureException
+				| TimeoutException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(Task.listen(mbox)){
-			try {
-				Message msg= (Message) Task.receive(mbox);
-				resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==requetePublication.hashCode()) && ((Boolean) msg.getMessage());
-			} catch (TransferFailureException | HostFailureException
-					| TimeoutException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
 		return resultat;
-		
+
 	}
 
-	public boolean actualiseMur(){
-		
+	public boolean actualiseMur() throws TransferFailureException, HostFailureException, TimeoutException{
+
 		boolean resultat=false;
-		
+
 		MessageDigest md;
 		String hash = null;
 		try {
@@ -95,31 +90,24 @@ public class Publier extends Process {
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		Message<String> majMur = new Message<String>(hash);
 		majMur.setType(typeMessage.maj_mur);
 		majMur.setMboxReponse(mbox);
 		majMur.setSuperPeerConcerne(spContenu);
-		majMur.isend(spMur+"_GestionMur");
-		
-		//On laisse au superpeer le temps de faire la tache et renvoyer une confirmation
+		majMur.send(spMur+"_GestionMur");
+
+		//Process.sleep(100);
+
 		try {
-			Process.sleep(100);
-		} catch (HostFailureException e) {
+			Message msg= (Message) Task.receive(mbox);
+			resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==majMur.hashCode()) && ((Boolean) msg.getMessage());
+		} catch (TransferFailureException | HostFailureException
+				| TimeoutException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(Task.listen(mbox)){
-			try {
-				Message msg= (Message) Task.receive(mbox);
-				resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==majMur.hashCode()) && ((Boolean) msg.getMessage());
-			} catch (TransferFailureException | HostFailureException
-					| TimeoutException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		if(resultat) Msg.info(this.host.getName()+ " a publié '"+ this.publication+"'.");
 		return resultat;
 	}
 

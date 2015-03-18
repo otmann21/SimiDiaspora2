@@ -4,9 +4,9 @@
 	<!--add your mapping between process and hosts here -->
 	<process host="superpeer0" function="processSuperPeer.GestionContenu">
 	</process>
-	<process host="superpeer1" function="processSuperPeer.GestionMur">
+ 	<process host="superpeer1" function="processSuperPeer.GestionMur">
 	</process>
-	<process host="superpeer2" function="processSuperPeer.LiensAmis">
+	 <process host="superpeer2" function="processSuperPeer.LiensAmis">
 		<argument value="2" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
@@ -17,6 +17,6 @@
 	</process>
 	<process host="peer1" function="processPeer.Consulter">
 		<argument value="500" />
-		<argument value="suprpeer2" />
+		<argument value="superpeer2" />
 	</process>
 </platform>
