@@ -22,8 +22,8 @@ public class Consulter extends Process{
 
 	int offset ; //decalage permettant la bonne synchronisation.
 
-	/**on a dit que le process liensAmis tournait sur un SP "central". Il faut
-	son nom (i e son adresse), pour aller le trouver et faire les verif.*/
+	//On a dit que le process liensAmis tournait sur un SP "central". Il faut
+	//son nom (i e son adresse), pour aller le trouver et faire les verif.
 
 	String SPAmi ; 
 
@@ -32,7 +32,7 @@ public class Consulter extends Process{
 	String mbox; //baL.
 
 	/**
-	 * On passe donc en argument, après l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
+	 * On passe donc en argument, apres l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
 	 * @param host
 	 * @param name
 	 * @param args
@@ -126,6 +126,7 @@ public class Consulter extends Process{
 				if (resultat1){
 					listePubli = (ArrayList<String[]>) msg.getMessage();
 				}
+
 			}
 		
 		return listePubli;
@@ -134,6 +135,7 @@ public class Consulter extends Process{
 	public String recuperePubli(String hache, String SPContenu) throws TransferFailureException, HostFailureException, TimeoutException{ //sp contenu attribut inutile
 
 		String publi = ""; //la publi que l'on va renvoyer.
+
 
 		//creation et envoi du message à SPContenu
 		Message<String> demandePubli = new Message<String>();
@@ -150,29 +152,17 @@ public class Consulter extends Process{
 				publi = (String) publication.getMessage();
 			}
 		}
-		//
-		//Je pense qu'il faut supprimer ce code, mais dans le doute je le laisse en commentaire.
-		//
-		//recherche du hache de l'élement dans le mur, on cherche son indice.
-		//			Iterator i = mur2.iterator();
-		//			ArrayList listeHache = new ArrayList();
-		//
-		//			while (i.hasNext()){
-		//				String[] el = (String[]) i.next();
-		//				String elHach = el[0];
-		//				listeHache.add(elHach);
-		//			}
-		//
-		//			int indice = listeHache.indexOf(hache); //calcul de l'indice, en supposant qu'il est unique.
-		//			String[] couple = (String[]) listeHache.get(indice);
-		//			String publi = couple[1];
+
 		return publi ;
 	}
-
 	/**
 	 * consulterMur retourne toutes les publications du mur.
 	 * On appelle x fois la fonction recupere publi.
 	 * On n'envoie pas le resultat avec un message.
+<<<<<<< HEAD
+=======
+	 * 
+>>>>>>> d9ddc3723e9bd0a4af69d22005bc12719e568e3b
 	 * @param peer : le pair dont on consulte le mur.
 	 * @return la liste de toutes les publications du mur.
 	 * @throws TimeoutException 
@@ -183,6 +173,7 @@ public class Consulter extends Process{
 		ArrayList<String> liste = new ArrayList<String>() ;
 
 		ArrayList<String[]> mur = this.recupereMur();
+
 		Iterator it = mur.iterator();
 
 		while (it.hasNext()){

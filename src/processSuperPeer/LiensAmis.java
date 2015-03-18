@@ -23,47 +23,57 @@ public class LiensAmis extends Process{
 	 * @author hugo
 	 */
 
-	boolean [][] topo;
-
 	/**
-	 * Cet attribut est une matrice symétrique de booleens.
-	 * Si N est le nombre de peers,il possède 
-	 * N lignes et N collones. topo[i][j] est vrai si i et j sont
-	 * amis, faux sinon.
+	 * Cet attribut est une matrice symetrique de booleens.
+	 * Si N est le nombre de peers,il possede N lignes et N collones. 
+	 * topo[i][j] est vrai si i et j sont amis, faux sinon.
 	 * 
 	 */
+	boolean [][] topo;
 
 	/**
 	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
 	 * Le peer_i est en position i dans la liste.
 	 */
 	HashMap<String, String> annuaire=new HashMap<String, String>();
-
+	
+	
 	private String mbox;
-	int nbPeers ; 
+	int nbPeers ;
 
+	/**
+	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
+	 * 
+	 * On rempli ensuite le tableau topo n * n de facon raisonnable,
+	 * plausible et un peu aleatoire. Par exemple en generant un nombre
+	 * d'amis aleatoire.On a choisi en premier lieu de mettre tout le monde ami avec le peer0.
+	 * @param peer
+	 * @return
+	 */
+	
 	public LiensAmis(Host host, String name, String[]args){
 		super(host, name, args);
 		mbox = host.getName()+"_LiensAmis";
 
 		int n = Integer.parseInt(args[0]);
-		/**
-		 * On doit donner en premier argument de args le nombre de pairs du réseau.
-		 */
+		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
+		
 		this.nbPeers = n ;
+		
+		//remplissage du tableau des liens d'amitie. Le peer0 est ami avec tout le monde.
 		this.topo = new boolean [n][n] ;
 
-		for(int i=0 ; i<n;i++){ // on met tout le monde à false.
+		for(int i=0 ; i<n;i++){ // on met tout le monde a false.
 			for(int j=0 ; j<n;j++){
 				topo[i][j]=false;
 			}
 		}
 
 		for(int i=0 ; i<n;i++){
-			topo[i][i] = true; //on est par defaut ami avec soi-même.
+			topo[i][i] = true; //on est par defaut ami avec soi-meme.
 		}
 
-		for(int i=0 ; i<n;i++){ //le peer0 est ami avec tt le monde.
+		for(int i=0 ; i<n;i++){ //le peer0 est ami avec tout le monde.
 			topo[0][i] = true;
 			topo[i][0] = true;
 		}
@@ -75,16 +85,6 @@ public class LiensAmis extends Process{
 		return spMur;
 	}
 
-	/**
-	 * Le constructeur prend seulement en argument le nombre de 
-	 * peers du réseau.
-	 * 
-	 * On rempli ensuite le tableau topo n * n de façon raisonnable,
-	 * plausible et un peu aléatoire. Par exemple en générant un nombre
-	 * d'amis aléatoire.
-	 * @param peer
-	 * @return
-	 */
 
 	public ArrayList<String[]> listeAmis(String peer){
 		ArrayList<String[]> liste = new ArrayList<String[]>();
@@ -98,13 +98,14 @@ public class LiensAmis extends Process{
 				liste.add(nbAmis, ami);
 				nbAmis++;
 			}
+
 		}
 		return liste;
 	}
 
 	/**
-	 * La méthode liste amis retourne la liste des (amis, SPWall)
-	 *  du pair passé en argument. Elle retourne donc 
+	 * La methode liste amis retourne la liste des (amis, SPWall)
+	 *  du pair passe en argument. Elle retourne donc 
 	 *  une liste de couple.
 	 */
 
@@ -113,10 +114,10 @@ public class LiensAmis extends Process{
 	}
 
 	/**
-	 * la méthode sontAmis(peer1, peer2), très explicitement, 
-	 * renvoie le booléen indiquant si oui ou non ils sont amis.
+	 * la methode sontAmis(peer1, peer2), tres explicitement, 
+	 * renvoie le booleen indiquant si oui ou non ils sont amis.
 	 * 
-	 * Pour pouvoir accéder à ce booleen avec des entiers,
+	 * Pour pouvoir acceder à ce booleen avec des entiers,
 	 * on cree une methode entierPeer, renvoyant l'entier du pair.
 	 * Tous les pairs ont pour nom "peer" + entierPeer.
 	 * @param args
@@ -129,8 +130,8 @@ public class LiensAmis extends Process{
 	}
 
 	/**
-	 * Comme expliqué, cette méthode renvoie l'entier correspondant
-	 * à un peer donné.
+	 * Comme explique, cette methode renvoie l'entier correspondant
+	 * a un peer donne.
 	 * @param args
 	 */
 

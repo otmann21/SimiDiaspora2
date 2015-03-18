@@ -4,8 +4,8 @@ import org.simgrid.msg.Host;
 import org.simgrid.msg.Task;
 
 /**
- * La classe Message doit pouvoir représenter tous les échanges que des Process ont besoin de faire.
- * Elle est générique.
+ * La classe Message doit pouvoir representer tous les echanges que des Process ont besoin de faire.
+ * Elle est generique pour permettre souplesse et diversité dans les messages.
  *  
  * @author otmann
  *
@@ -15,8 +15,8 @@ public class Message<T> extends Task{
 	
 	
 	/**
-	 * Le type va définir la fonction qu'a le message.
-	 * Tous les types utlisés sont listés dans l'enum typeMessage.
+	 * Le type va definir la fonction qu'a le message.
+	 * Tous les types utlises sont listes dans l'enum typeMessage.
 	 */
 	private typeMessage type;
 	private String expediteur;
@@ -24,16 +24,16 @@ public class Message<T> extends Task{
 	
 	/**
 	 * Certains messages peuvent se separer en une action, et le nom du peer pour 
-	 * lequel on fait cette action.
-	 * Dans ce cas on peut se servir de l'attribut peerConcerne. Sinon on ne 
-	 * s'en sert pas
+	 * lequel on fait cette action. Dans ce cas on peut se servir de l'attribut peerConcerne. Sinon on ne 
+	 * s'en sert pas.
 	 */	
 	
 	private String peerConcerne=null;
 	
 	private String peerConcerne2=null;
+	
 	/**
-	 * superPeerConcerne, même principe que peerConcerne
+	 * SuperPeerConcerne, meme principe que peerConcerne.
 	 * Il peut y avoir deux peers concernes, comme dans verif_amis (peer1, peer2).
 	 */
 	
@@ -42,10 +42,10 @@ public class Message<T> extends Task{
 	/**
 	 * Lorsque l'on repond a une requete, on precisera le hash de l'objet Message 
 	 * auquel on repond.
-	 * Le hash en question sera celui donné par la méthode hashCode() de la classe 
+	 * Le hash en question sera celui donne par la methode hashCode() de la classe 
 	 * Object.
-	 * Par défaut cet attribut vaut 0, dans le cas où ce n'est pas une réponse, 
-	 * mais le début de la communication.
+	 * Par defaut cet attribut vaut 0, dans le cas ou ce n'est pas une reponse, 
+	 * mais le debut de la communication.
 	 */
 	
 	private int hashCodeMessagePrecedent = 0;
@@ -62,11 +62,20 @@ public class Message<T> extends Task{
 	
 	private T message;
 	
+	/**
+	 * Constructeur de la classe Message.
+	 */
+	
 	public Message(){
 		super();
 		this.expediteur = Host.currentHost().getName();
 	}
 	
+	
+	/**
+	 * Constructeur ou l'on precise directement la payload.
+	 * @param message
+	 */
 	public Message(T message){
 		super();
 		this.message=message;
@@ -88,6 +97,7 @@ public class Message<T> extends Task{
 
 	}
 
+	//Suivent tous les getters et les setters des attributs private.
 	public String getExpediteur() {
 		return expediteur;
 	}
