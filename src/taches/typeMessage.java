@@ -77,6 +77,7 @@ public enum typeMessage {
 	/**
 	 * Le type de message reponse_sontAmis correspond a une reponse de la part du Process SP liensAmis,
 	 * qui vient de verifier si deux peers sont amis.
+	 * Le corps du message est le booleen.
 	 */
 	
 	reponse_sontAmis,

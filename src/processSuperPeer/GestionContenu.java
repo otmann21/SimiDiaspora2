@@ -3,13 +3,17 @@ package processSuperPeer;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.simgrid.msg.HostFailureException;
 import org.simgrid.msg.Msg;
 import org.simgrid.msg.Process;
 import org.simgrid.msg.Host;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Task;
+import org.simgrid.msg.TimeoutException;
+import org.simgrid.msg.TransferFailureException;
 
 import taches.Message;
 import taches.typeMessage;
@@ -37,12 +41,47 @@ public class GestionContenu extends Process{
 	 * 'nomHost' + '_GestionContenu'
 	 */
 	private String mbox;
+	
+	/**
+	 * adresse du SP Liens amis, que l'on va devoir contacter.
+	 */
+	private String SPLiensAmis; 
 
 	public GestionContenu(Host host, String name, String[]args) {
 		super(host,name,args);
 
 		this.donnees = new HashMap<String, HashMap<String, String>>();
 		this.mbox = host.getName()+"_GestionContenu";
+	}
+	
+	public boolean verif(String peer1, String peer2) throws TransferFailureException, HostFailureException, TimeoutException{
+		boolean pairAmi = false ;
+		
+		
+		Message<String> verifAm = new Message();	//creation du message de requete à LiensAmi.
+		verifAm.setType(typeMessage.verif_ami);
+		verifAm.setPeerConcerne(peer1);
+		verifAm.setPeerConcerne2(peer2);
+		verifAm.isend(SPLiensAmis);
+		
+		//on attend pour laisser au message le temps d'arriver.
+		try {
+			Process.sleep(100); //si ce temps n'est pas suffisant, on ajoutera du temps.
+		} catch (HostFailureException e) {
+			e.printStackTrace();
+		}
+
+		//On regarde si l'on reçoie le message.
+		if(Task.listen(mbox)){
+			Message msgVerif= (Message) Task.receive(mbox);
+			boolean resVerif = (msgVerif.getType()==typeMessage.reponse_sontAmis) && (msgVerif.getHashCodeMessagePrecedent()==verifAm.hashCode());
+			if ((resVerif)&&((boolean) msgVerif.getMessage())){
+				pairAmi = true;
+			}
+		}
+		
+		
+		return pairAmi;
 	}
 
 	public void main(String[] args) throws MsgException {
@@ -64,6 +103,18 @@ public class GestionContenu extends Process{
 					Message<Boolean> confirmation = new Message<Boolean>(true, upload);
 					confirmation.setType(typeMessage.confirmation);
 					confirmation.isend(upload.getMboxReponse());
+					break;
+				case verif_ami:
+					//message reçu et extraction des 2 arguments, les 2 pairs.
+					Message<String> rec = msg;
+					String peer1 = rec.getPeerConcerne();
+					String peer2 = rec.getPeerConcerne2();
+					
+					//Creation, evaluation et envoi du message de reponse contenant le booleen.
+					boolean verif;
+					Message<Boolean> amitie = new Message<Boolean> (verif(peer1, peer2));
+					amitie.setType(typeMessage.reponse_sontAmis);
+					amitie.isend(rec.getExpediteur());
 					break;
 				}
 			}
