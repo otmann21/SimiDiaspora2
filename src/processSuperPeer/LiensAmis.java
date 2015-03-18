@@ -32,6 +32,13 @@ public class LiensAmis extends Process{
 	 * amis, faux sinon.
 	 * 
 	 */
+	
+	/**
+	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
+	 * Le peer_i est en position i dans la liste.
+	 */
+	ArrayList<String[]> annuaire ;
+	
 	private String mbox;
 	int nbPeers ; 
 

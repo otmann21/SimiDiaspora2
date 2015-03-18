@@ -26,13 +26,7 @@ public class Consulter extends Process{
 
 	String SPAmi ; 
 
-	/**
-	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
-	 * Le peer_i est en position i dans la liste.
-	 */
-	ArrayList<String[]> annuaire ;
-
-	String peer; //c'est de ce pair qu'on va consulter le mur.
+	String peer; //c'est de ce pair de qui on va consulter le mur.
 	String spwall; //spwall du peer en cours.
 	String mbox; //baL.
 
@@ -50,11 +44,13 @@ public class Consulter extends Process{
 	}
 
 	/**recupere l'arraylist contenant le hache et le SPContenu de chaque publication.
-	 * Quand un peer demande à voir le mur de peer0 à GestionMur, 
+	 * Quand un peer demande à voir du contenu, on lui donne le contenu de son premier peer ami. 
 	 * celui-ci appelle la méthode recupere mur.
 	 */
-	public ArrayList <String[]> recupereMur(String peer, String spWall){
+	public ArrayList <String[]> recupereMur(String spWall){
 
+		this.spwall = spWall;
+		
 		// Quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
 		// On commence par demander à SP LiensAmis la liste de ses amis.
 
@@ -69,11 +65,10 @@ public class Consulter extends Process{
 			e.printStackTrace();
 		}
 
-		// Puis il recupere la reponse sous forme de liste, 
-		// et demande a consulter le mur du premier de ses amis.
+		// Puis il recupere la reponse sous forme de liste, et choisi le premier pair ami.
 		if (Task.listen(mbox)){
 			Message lAmis= (Message) Task.receive(mbox);
-		boolean resultat = (lAmis.getType()==typeMessage.reponse_listeAmis) && (lAmis.getHashCodeMessagePrecedent()==recupListeAmis.hashCode());
+			boolean resultat = (lAmis.getType()==typeMessage.reponse_listeAmis) && (lAmis.getHashCodeMessagePrecedent()==recupListeAmis.hashCode());
 			if (resultat){
 				ArrayList<String> lAmis2 = new ArrayList<String>();
 				lAmis2 = (ArrayList<String>) lAmis.getMessage(); 
@@ -82,6 +77,7 @@ public class Consulter extends Process{
 			}	
 		}
 
+		// et demande a consulter le mur du premier de ses amis.
 		ArrayList<String[]> listePubli = new ArrayList();
 
 		Message<String> reqWall = new Message();	//creation du message de requete au SPWall.
@@ -100,19 +96,20 @@ public class Consulter extends Process{
 			boolean resultat = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
 			if (resultat){
 				listePubli = (ArrayList<String[]>) msg.getMessage();
-			}	
-
-			ArrayList <String[]> liste = new ArrayList();
-			// on demande ensuite la liste au process gestion mur.
-
-			// cette methode envoie un message au process gestion mur. NON.
+			}
 
 			return listePubli ;
 		}
 
-		public String recuperePubli(String hache, String SPContenu){
+		public String recuperePubli(String hache){ //sp contenu attribut inutile
 
-			ArrayList mur2 = this.recupereMur(peer, this.spwall);
+			String SPContenu;
+			//On recupere le mur grace a la fonction precedente.
+			//liste (hache, SPContenu).
+			
+			ArrayList mur2 = this.recupereMur(this.spwall);
+			String[] couple = recupereMur(this.spwall).get(mur2.indexOf(hache));
+			//on prend l'element de mur2 associé au message 'hache'
 
 			Message<String> demandePubli = new Message<String>();
 			demandePubli.setMessage("");
@@ -120,6 +117,7 @@ public class Consulter extends Process{
 			demandePubli.setMboxReponse("");
 			// ces attributs sont a renseigner.
 
+			// on demande ensuite la liste au process gestion mur.
 			demandePubli.setType(typeMessage.requete_publication);
 			demandePubli.isend((String) indSp.next());
 
@@ -168,7 +166,7 @@ public class Consulter extends Process{
 	public ArrayList <String> consulterMur(String peer){
 		ArrayList<String> liste = new ArrayList() ;
 
-		ArrayList mur = this.recupereMur(peer, this.spwall);
+		ArrayList mur = this.recupereMur(this.spwall);
 		Iterator it = mur.iterator();
 
 		while (it.hasNext()){
