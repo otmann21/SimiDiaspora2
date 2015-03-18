@@ -67,6 +67,11 @@ public class LiensAmis extends Process{
 			topo[i][0] = true;
 		}
 	}
+	
+	public String consulterAnnuaire(String peer){
+		String[] couple = this.annuaire.get(annuaire.indexOf(peer));
+		return couple[1];
+	}
 
 	/**
 	 * Le constructeur prend seulement en argument le nombre de 
@@ -155,6 +160,16 @@ public class LiensAmis extends Process{
 					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2);
 					reponse2.setType(typeMessage.reponse_listeAmis);
 					reponse2.isend(requete2.getMboxReponse());	
+					break;
+				case demandeSPWall:
+					//récupération des arguments et appel de la méthode consulterAnnuaire.
+					String peerAChercher =(String) msg.getMessage();
+					String SPWallduPeer = this.consulterAnnuaire(peerAChercher);
+					
+					//création et envoi du message au process consulter.
+					Message<String> repSP = new Message<String>(SPWallduPeer);
+					repSP.setType(typeMessage.reponseSPWall);
+					repSP.isend(msg.getExpediteur());	
 					break;
 				}
 			}

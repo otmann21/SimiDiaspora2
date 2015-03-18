@@ -47,9 +47,7 @@ public class Consulter extends Process{
 	 * Quand un peer demande à voir du contenu, on lui donne le contenu de son premier peer ami. 
 	 * celui-ci appelle la méthode recupere mur.
 	 */
-	public ArrayList <String[]> recupereMur(String spWall){
-
-		this.spwall = spWall;
+	public ArrayList <String[]> recupereMur(String spWall){		
 		
 		// Quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
 		// On commence par demander à SP LiensAmis la liste de ses amis.
@@ -75,8 +73,20 @@ public class Consulter extends Process{
 				this.peer = lAmis2.get(0); 
 				//on a choisi le peer a consulter, le peer 0, qui est ami avec tout le monde.
 			}	
-		}
-
+		}		
+		
+		//recherche du SPWall qui lui correspond.
+		Message<String> demande;
+		demande.setType(typeMessage.demandeSPWall);
+		demande.setExpediteur(this.mbox);
+		demande.isend(this.SPAmi);
+		
+		//reception du SPWall
+		
+		//affectation du SPWall
+		this.spwall = spWall;
+		
+		
 		// et demande a consulter le mur du premier de ses amis.
 		ArrayList<String[]> listePubli = new ArrayList();
 

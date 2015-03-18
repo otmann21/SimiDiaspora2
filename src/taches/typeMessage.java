@@ -85,6 +85,22 @@ public enum typeMessage {
 	 * Idem. Le Process SP listeAmis renvoie par ce message la liste des amis d'un peer.
 	 */
 	
-	reponse_listeAmis
+	reponse_listeAmis,
+	
+	/**
+	 * Message <String>
+	 * on utilise le message demandeSPWall quand on appelle le process LiensAmis pour connaître
+	 * le spwall d'un peer.
+	 * Le corps du message est le peer de qui on veut connaître le SPWall.
+	 */
+	demandeSPWall,
+	
+	/**
+	 * Message<String>
+	 * On utilise reponse SPWall quand on repond au process Consulter le nom (cad l'adresse) du SPWall
+	 * cherché. Le string est le spWall.
+	 */
+	
+	reponseSPWall
 
 }
