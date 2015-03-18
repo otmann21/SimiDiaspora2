@@ -98,7 +98,6 @@ public class LiensAmis extends Process{
 				liste.add(nbAmis, ami);
 				nbAmis++;
 			}
-
 		}
 		return liste;
 	}
