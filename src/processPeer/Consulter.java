@@ -178,8 +178,9 @@ public class Consulter extends Process{
 
 		while (it.hasNext()){
 			String[] el = (String[]) it.next();
+			String hacheP = el[0];
 			String contenu = el[1];
-			liste.add(contenu);
+			liste.add(recuperePubli(hacheP, contenu));
 		}
 		return liste ;
 	}
