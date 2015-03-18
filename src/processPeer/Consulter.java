@@ -21,8 +21,8 @@ public class Consulter extends Process{
 
 	int offset ; //decalage permettant la bonne synchronisation.
 
-	/**on a dit que le process liensAmis tournait sur un SP "central". Il faut
-	son nom (i e son adresse), pour aller le trouver et faire les verif.*/
+	//On a dit que le process liensAmis tournait sur un SP "central". Il faut
+	//son nom (i e son adresse), pour aller le trouver et faire les verif.
 
 	String SPAmi ; 
 
@@ -31,7 +31,7 @@ public class Consulter extends Process{
 	String mbox; //baL.
 
 	/**
-	 * On passe donc en argument, après l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
+	 * On passe donc en argument, apres l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
 	 * @param host
 	 * @param name
 	 * @param args
@@ -54,7 +54,7 @@ public class Consulter extends Process{
 
 		// Quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
 		// On commence par demander à SP LiensAmis la liste de ses amis.
-		
+
 		ArrayList<String[]> listePubli = new ArrayList();
 
 		Message<String> recupListeAmis = new Message();
@@ -123,7 +123,7 @@ public class Consulter extends Process{
 					listePubli = (ArrayList<String[]>) msg.getMessage();
 				}
 
-				
+
 			}
 		}
 		return listePubli;
@@ -132,8 +132,8 @@ public class Consulter extends Process{
 	public String recuperePubli(String hache) throws TransferFailureException, HostFailureException, TimeoutException{ //sp contenu attribut inutile
 
 		String publi = ""; //la publi que l'on va renvoyer.
-		
-		//Récupération du mur et du SPContenu de la publi.
+
+		//Recuperation du mur et du SPContenu de la publi.
 		ArrayList mur2 = this.recupereMur();
 		String[] couple = recupereMur().get(mur2.indexOf(hache));
 		String SPContenu = couple[1];
@@ -155,52 +155,42 @@ public class Consulter extends Process{
 				publi = (String) publication.getMessage();
 			}
 		}
-//
-		//Je pense qu'il faut supprimer ce code, mais dans le doute je le laisse en commentaire.
-		//
-			//recherche du hache de l'élement dans le mur, on cherche son indice.
-//			Iterator i = mur2.iterator();
-//			ArrayList listeHache = new ArrayList();
-//
-//			while (i.hasNext()){
-//				String[] el = (String[]) i.next();
-//				String elHach = el[0];
-//				listeHache.add(elHach);
-//			}
-//
-//			int indice = listeHache.indexOf(hache); //calcul de l'indice, en supposant qu'il est unique.
-//			String[] couple = (String[]) listeHache.get(indice);
-//			String publi = couple[1];
-	return publi ;
-		}
 
-		/**
-		 * consulterMur retourne toutes les publications du mur.
-		 * On appelle x fois la fonction recupere publi.
-		 * On n'envoie pas le resultat avec un message.
-		 * @param peer : le pair dont on consulte le mur.
-		 * @return la liste de toutes les publications du mur.
-		 * @throws TimeoutException 
-		 * @throws HostFailureException 
-		 * @throws TransferFailureException 
-		 */
-		public ArrayList <String> consulterMur(String peer) throws TransferFailureException, HostFailureException, TimeoutException{
-			ArrayList<String> liste = new ArrayList() ;
-
-			ArrayList mur = this.recupereMur();
-			Iterator it = mur.iterator();
-
-			while (it.hasNext()){
-				String[] el = (String[]) it.next();
-				String contenu = el[1];
-				liste.add(contenu);
-			}
-			return liste ;
-		}
-
-		public void main(String[] args) throws MsgException{
-			// TODO Auto-generated method stub
-
-		}
-
+		return publi ;
 	}
+
+	/**
+	 * consulterMur retourne toutes les publications du mur.
+	 * On appelle x fois la fonction recupere publi.
+	 * On n'envoie pas le resultat avec un message.
+	 * 
+	 * @param peer : le pair dont on consulte le mur.
+	 * @return la liste de toutes les publications du mur.
+	 * @throws TimeoutException 
+	 * @throws HostFailureException 
+	 * @throws TransferFailureException 
+	 */
+	public ArrayList <String> consulterMur() throws TransferFailureException, HostFailureException, TimeoutException{
+		ArrayList<String> liste = new ArrayList() ;
+
+		ArrayList mur = this.recupereMur();
+		Iterator it = mur.iterator();
+
+		while (it.hasNext()){
+			String[] el = (String[]) it.next();
+			String contenu = el[1];
+			liste.add(contenu);
+		}
+		return liste ;
+	}
+
+	/**
+	 * ON passe en arguments, en premier.
+	 */
+	public void main(String[] args) throws MsgException{
+		// TODO Auto-generated method stub
+
+		this.consulterMur();
+	}
+
+}
