@@ -60,6 +60,11 @@ public class LiensAmis extends Process{
 		
 		this.nbPeers = n ;
 		
+		int modeRemplissage = Integer.parseInt(args[1]);
+		//Cet entier, qui vaut 0 pour le remplissage 'facile', peut prendre d'autres valeurs.
+		//
+		
+		if (modeRemplissage==0){
 		//remplissage du tableau des liens d'amitie. Le peer0 est ami avec tout le monde.
 		this.topo = new boolean [n][n] ;
 
@@ -77,6 +82,8 @@ public class LiensAmis extends Process{
 			topo[0][i] = true;
 			topo[i][0] = true;
 		}
+		}
+		
 	}
 	
 	public String consulterAnnuaire(String peer){
