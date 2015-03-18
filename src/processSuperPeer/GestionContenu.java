@@ -150,7 +150,7 @@ public class GestionContenu extends Process{
 		}
 	}
 
-	String reponseContenu(String posteur, String hash){
+	public String reponseContenu(String posteur, String hash){
 		
 		String reponse=null;
 		
