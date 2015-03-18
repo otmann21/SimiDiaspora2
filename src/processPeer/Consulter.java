@@ -36,6 +36,12 @@ public class Consulter extends Process{
 	String spwall; //spwall du peer en cours.
 	String mbox; //baL.
 
+	/**
+	 * On passe donc en argument, après l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
+	 * @param host
+	 * @param name
+	 * @param args
+	 */
 
 	public Consulter(Host host, String name, String[]args){
 		super(host,name,args);
@@ -48,19 +54,39 @@ public class Consulter extends Process{
 	 * celui-ci appelle la méthode recupere mur.
 	 */
 	public ArrayList <String[]> recupereMur(String peer, String spWall){
-		// quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
-		// ON commence par demander à SP LiensAmis la liste de ses amis. puis il demande a consulter le mur 
-		//du premier de ses amis.
 
-		///////
-		//// distribuer le bon code dans les méthodes. ICi on a juste a renvoyer listePubli.
-		//////
+		// Quand on recupere le mur, on obtient un ensemble de couple (hache, contenu)
+		// On commence par demander à SP LiensAmis la liste de ses amis.
+
+		Message<String> recupListeAmis;
+		recupListeAmis.setType(typeMessage.liste_ami);
+		//recupListeAmis.setPeerConcerne(peer);
+		recupListeAmis.isend(this.SPAmi); //envoi du message au spWall, puis attente de sa réponse.
+
+		try {
+			Process.sleep(100); //si ce temps n'est pas suffisant, on ajoutera du temps.
+		} catch (HostFailureException e) {
+			e.printStackTrace();
+		}
+
+		// Puis il recupere la reponse sous forme de liste, 
+		// et demande a consulter le mur du premier de ses amis.
+		if (Task.listen(mbox)){
+			Message lAmis= (Message) Task.receive(mbox);
+		boolean resultat = (lAmis.getType()==typeMessage.reponse_listeAmis) && (lAmis.getHashCodeMessagePrecedent()==recupListeAmis.hashCode());
+			if (resultat){
+				ArrayList<String> lAmis2 = new ArrayList<String>();
+				lAmis2 = (ArrayList<String>) lAmis.getMessage(); 
+				this.peer = lAmis2.get(0); 
+				//on a choisi le peer a consulter, le peer 0, qui est ami avec tout le monde.
+			}	
+		}
 
 		ArrayList<String[]> listePubli = new ArrayList();
 
 		Message<String> reqWall = new Message();	//creation du message de requete au SPWall.
 		reqWall.setType(typeMessage.requete_mur);
-		reqWall.setPeerConcerne(peer);
+		reqWall.setPeerConcerne(this.peer);
 		reqWall.isend(spWall); //envoi du message au spWall, puis attente de sa réponse.
 
 		try {
@@ -70,13 +96,11 @@ public class Consulter extends Process{
 		}
 
 		if(Task.listen(mbox)){
-			try {
-				Message msg= (Message) Task.receive(mbox);
-				boolean resultat = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
-				if (resultat){
-					listePubli = (ArrayList<String[]>) msg.getMessage();
-				}					
-			}
+			Message msg= (Message) Task.receive(mbox);
+			boolean resultat = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
+			if (resultat){
+				listePubli = (ArrayList<String[]>) msg.getMessage();
+			}	
 
 			ArrayList <String[]> liste = new ArrayList();
 			// on demande ensuite la liste au process gestion mur.
@@ -132,32 +156,32 @@ public class Consulter extends Process{
 		String[] couple = (String[]) listeHache.get(indice);
 		String publi = couple[1];
 		return publi ;
-}
-
-/**
- * consulterMur retourne toutes les publications du mur.
- * On appelle x fois la fonction recupere publi.
- * On n'envoie pas le resultat avec un message.
- * @param peer : le pair dont on consulte le mur.
- * @return la liste de toutes les publications du mur.
- */
-public ArrayList <String> consulterMur(String peer){
-	ArrayList<String> liste = new ArrayList() ;
-
-	ArrayList mur = this.recupereMur(peer, this.spwall);
-	Iterator it = mur.iterator();
-
-	while (it.hasNext()){
-		String[] el = (String[]) it.next();
-		String contenu = el[1];
-		liste.add(contenu);
 	}
-	return liste ;
-}
 
-public void main(String[] args) throws MsgException{
-	// TODO Auto-generated method stub
+	/**
+	 * consulterMur retourne toutes les publications du mur.
+	 * On appelle x fois la fonction recupere publi.
+	 * On n'envoie pas le resultat avec un message.
+	 * @param peer : le pair dont on consulte le mur.
+	 * @return la liste de toutes les publications du mur.
+	 */
+	public ArrayList <String> consulterMur(String peer){
+		ArrayList<String> liste = new ArrayList() ;
 
-}
+		ArrayList mur = this.recupereMur(peer, this.spwall);
+		Iterator it = mur.iterator();
+
+		while (it.hasNext()){
+			String[] el = (String[]) it.next();
+			String contenu = el[1];
+			liste.add(contenu);
+		}
+		return liste ;
+	}
+
+	public void main(String[] args) throws MsgException{
+		// TODO Auto-generated method stub
+
+	}
 
 }
