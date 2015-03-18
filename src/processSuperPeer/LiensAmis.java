@@ -14,14 +14,14 @@ import org.simgrid.msg.Task;
 
 import taches.Message;
 import taches.typeMessage;
- 
-/** Ce process gere les liens d'amitiés du réseau entier.
- * C'est le seul process  complètement centralisé.
- * 
- * @author hugo
- */
 
 public class LiensAmis extends Process{
+
+	/** Ce process gère les liens d'amitiés du réseau entier.
+	 * C'est le seul process  complètement centralisé.
+	 * 
+	 * @author hugo
+	 */
 
 	/**
 	 * Cet attribut est une matrice symetrique de booleens.
@@ -29,18 +29,17 @@ public class LiensAmis extends Process{
 	 * topo[i][j] est vrai si i et j sont amis, faux sinon.
 	 * 
 	 */
-	
 	boolean [][] topo;
 
 	/**
 	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
 	 * Le peer_i est en position i dans la liste.
 	 */
+	HashMap<String, String> annuaire=new HashMap<String, String>();
 	
-	ArrayList<String[]> annuaire ;
 	
 	private String mbox;
-	int nbPeers ; 
+	int nbPeers ;
 
 	/**
 	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
@@ -54,7 +53,8 @@ public class LiensAmis extends Process{
 	
 	public LiensAmis(Host host, String name, String[]args){
 		super(host, name, args);
-		
+		mbox = host.getName()+"_LiensAmis";
+
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
 		
@@ -85,26 +85,27 @@ public class LiensAmis extends Process{
 		}
 		
 	}
-	
+
 	public String consulterAnnuaire(String peer){
-		String[] couple = this.annuaire.get(annuaire.indexOf(peer));
-		return couple[1];
+		String spMur="";
+		if(this.annuaire.containsKey(peer)) spMur=this.annuaire.get(peer);
+		return spMur;
 	}
 
-	
-	
+
 	public ArrayList<String[]> listeAmis(String peer){
-		ArrayList<String[]> liste = new ArrayList();
-		
+		ArrayList<String[]> liste = new ArrayList<String[]>();
+
 		int nbAmis = 0;
 		int pair = this.entierPeer(peer);
-			//on parcours la ieme ligne et on regarde les amis de peeri.
-			for (int j = 0 ; j < this.nbPeers ; j++){
-				if (topo[pair][j]){
-					String[] ami = {"peer" + j};
-					liste.add(nbAmis, ami);
-					nbAmis++;
-				}
+		//on parcours la ième ligne et on regarde les amis de peeri.
+		for (int j = 0 ; j < this.nbPeers ; j++){
+			if (topo[pair][j]){
+				String[] ami = {"peer" + j, consulterAnnuaire("peer"+j)};
+				liste.add(nbAmis, ami);
+				nbAmis++;
+			}
+
 		}
 		return liste;
 	}
@@ -153,7 +154,7 @@ public class LiensAmis extends Process{
 					String peer1 = requete.getPeerConcerne();
 					String peer2 = requete.getPeerConcerne2();
 					boolean rep = sontAmis(peer1, peer2);
-					
+
 					//création et envoi du message au SP.
 					Message reponse = new Message(rep);
 					reponse.setType(typeMessage.reponse_sontAmis);
@@ -164,7 +165,7 @@ public class LiensAmis extends Process{
 					Message<String> requete2 = msg;
 					String peer = requete2.getPeerConcerne();
 					ArrayList<String[]> rep2 = listeAmis(peer);
-					
+
 					//création et envoi du message au SP.
 					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2);
 					reponse2.setType(typeMessage.reponse_listeAmis);
@@ -174,11 +175,11 @@ public class LiensAmis extends Process{
 					//récupération des arguments et appel de la méthode consulterAnnuaire.
 					String peerAChercher =(String) msg.getMessage();
 					String SPWallduPeer = this.consulterAnnuaire(peerAChercher);
-					
+
 					//création et envoi du message au process consulter.
 					Message<String> repSP = new Message<String>(SPWallduPeer);
 					repSP.setType(typeMessage.reponseSPWall);
-					repSP.isend(msg.getExpediteur());	
+					repSP.isend(msg.getExpediteur());
 					break;
 				}
 			}
