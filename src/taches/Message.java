@@ -5,7 +5,7 @@ import org.simgrid.msg.Task;
 
 /**
  * La classe Message doit pouvoir representer tous les echanges que des Process ont besoin de faire.
- * Elle est generique pour permettre souplesse et diversité dans les messages.
+ * Elle est generique pour permettre souplesse et diversite dans les messages.
  *  
  * @author otmann
  *

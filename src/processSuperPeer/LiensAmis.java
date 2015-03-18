@@ -42,7 +42,8 @@ public class LiensAmis extends Process{
 	int nbPeers ;
 
 	/**
-	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
+	 * Le constructeur prend en argument l'hote, le nom, le nombre de peers du reseau, 
+	 * et le mode de remplissage (0 ou 1).
 	 * 
 	 * On rempli ensuite le tableau topo n * n de facon raisonnable,
 	 * plausible et un peu aleatoire. Par exemple en generant un nombre
@@ -62,7 +63,7 @@ public class LiensAmis extends Process{
 		
 		int modeRemplissage = Integer.parseInt(args[1]);
 		//Cet entier, qui vaut 0 pour le remplissage 'facile', peut prendre d'autres valeurs.
-		//
+		//Si l'on rentre 1, on obtient un mode de remplissage un peu plus aléatoire et crédible.
 		
 		if (modeRemplissage==0){
 		//remplissage du tableau des liens d'amitie. Le peer0 est ami avec tout le monde.
@@ -82,6 +83,10 @@ public class LiensAmis extends Process{
 			topo[0][i] = true;
 			topo[i][0] = true;
 		}
+		}
+		
+		if(modeRemplissage==1){
+			
 		}
 		
 	}
