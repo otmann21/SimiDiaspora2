@@ -129,8 +129,10 @@ public class Consulter extends Process{
 		return listePubli;
 	}
 
-	public String recuperePubli(String hache){ //sp contenu attribut inutile
+	public String recuperePubli(String hache) throws TransferFailureException, HostFailureException, TimeoutException{ //sp contenu attribut inutile
 
+		String publi = ""; //la publi que l'on va renvoyer.
+		
 		//Récupération du mur et du SPContenu de la publi.
 		ArrayList mur2 = this.recupereMur();
 		String[] couple = recupereMur().get(mur2.indexOf(hache));
@@ -150,28 +152,26 @@ public class Consulter extends Process{
 			Message<String> publication= (Message) Task.receive(mbox);
 			boolean res = (publication.getType()==typeMessage.reponse_publication) && (publication.getHashCodeMessagePrecedent()==demandePubli.hashCode());
 			if (res){
-				publi = (String) msg.getMessage();
-
-
-				String[] el = (String[]) indSp.next();
-				String spContenu = el[1];
-				listeContenu.add(spContenu);
+				publi = (String) publication.getMessage();
 			}
-
+		}
+//
+		//Je pense qu'il faut supprimer ce code, mais dans le doute je le laisse en commentaire.
+		//
 			//recherche du hache de l'élement dans le mur, on cherche son indice.
-			Iterator i = mur2.iterator();
-			ArrayList listeHache = new ArrayList();
-
-			while (i.hasNext()){
-				String[] el = (String[]) i.next();
-				String elHach = el[0];
-				listeHache.add(elHach);
-			}
-
-			int indice = listeHache.indexOf(hache); //calcul de l'indice, en supposant qu'il est unique.
-			String[] couple = (String[]) listeHache.get(indice);
-			String publi = couple[1];
-			return publi ;
+//			Iterator i = mur2.iterator();
+//			ArrayList listeHache = new ArrayList();
+//
+//			while (i.hasNext()){
+//				String[] el = (String[]) i.next();
+//				String elHach = el[0];
+//				listeHache.add(elHach);
+//			}
+//
+//			int indice = listeHache.indexOf(hache); //calcul de l'indice, en supposant qu'il est unique.
+//			String[] couple = (String[]) listeHache.get(indice);
+//			String publi = couple[1];
+	return publi ;
 		}
 
 		/**
@@ -180,8 +180,11 @@ public class Consulter extends Process{
 		 * On n'envoie pas le resultat avec un message.
 		 * @param peer : le pair dont on consulte le mur.
 		 * @return la liste de toutes les publications du mur.
+		 * @throws TimeoutException 
+		 * @throws HostFailureException 
+		 * @throws TransferFailureException 
 		 */
-		public ArrayList <String> consulterMur(String peer){
+		public ArrayList <String> consulterMur(String peer) throws TransferFailureException, HostFailureException, TimeoutException{
 			ArrayList<String> liste = new ArrayList() ;
 
 			ArrayList mur = this.recupereMur();
