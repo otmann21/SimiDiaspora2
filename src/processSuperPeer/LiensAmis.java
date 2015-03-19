@@ -83,7 +83,7 @@ public class LiensAmis extends Process{
 		
 		for(int i=0 ; i<n;i++){ // on met tout le monde a false.
 			//par defaut tous les peers ont superpeer0 comme spGestionMur
-			annuaire.put("peer"+i, "superpeer0");
+			annuaire.put("peer"+i, "superpeer1");
 			for(int j=0 ; j<n;j++){
 				topo[i][j]=false;
 			}

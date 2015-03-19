@@ -84,7 +84,7 @@ public class Consulter extends Process{
 		recupListeAmis.send(this.SPAmi+"_LiensAmis"); //envoi du message au spWall, puis attente de sa réponse.
 
 		// Puis il recupere la reponse sous forme de liste, et choisi le premier pair ami.
-		//		while(!Task.listen(mbox)){
+
 		Message lAmis= (Message) Task.receive(mbox);
 		boolean resultat = (lAmis.getType()==typeMessage.reponse_listeAmis) && (lAmis.getHashCodeMessagePrecedent()==recupListeAmis.hashCode());
 		if (resultat){
@@ -92,11 +92,9 @@ public class Consulter extends Process{
 			
 			lAmis2 = (ArrayList<String[]>) lAmis.getMessage();
 			int n = lAmis2.size();
-			int indice = (int) Math.round(n * Math.random());
+			int indice = (int) Math.floor(n * Math.random());
 			this.peer = lAmis2.get(indice)[0];
 			this.spWall = lAmis2.get(indice)[1];
-			
-			//on choisi le premier peer ami a consulter.
 		}
 
 		//		}

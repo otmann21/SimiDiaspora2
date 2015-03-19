@@ -1,151 +1,431 @@
 <?xml version='1.0'?>
 <!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid.dtd">
 <platform version="3">
-	<!--Les superpeers -->
-	<process host="superpeer0" function="processSuperPeer.GestionContenu">
-		<argument value="superpeer1" />
+
+	<process host="superpeer0" function="processSuperPeer.LiensAmis">
+		<argument value="60" />
+		<argument value="1" />
+		<argument value="0.5" />
 	</process>
-	<process host="superpeer0" function="processSuperPeer.GestionMur">
-		<argument value="superpeer1" />
+
+	<process host="superpeer1" function="processSuperPeer.GestionContenu">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer1" function="processSuperPeer.GestionMur">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer2" function="processSuperPeer.GestionContenu">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer2" function="processSuperPeer.GestionMur">
+		<argument value="superpeer0" />
 	</process>
 	<process host="superpeer3" function="processSuperPeer.GestionContenu">
-		<argument value="superpeer1" />
+		<argument value="superpeer0" />
 	</process>
 	<process host="superpeer3" function="processSuperPeer.GestionMur">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer4" function="processSuperPeer.GestionContenu">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer4" function="processSuperPeer.GestionMur">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer5" function="processSuperPeer.GestionContenu">
+		<argument value="superpeer0" />
+	</process>
+	<process host="superpeer5" function="processSuperPeer.GestionMur">
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer0" function="processPeer.Publier">
+		<argument value="167" />
+		<argument
+			value="Le carre de mon numero est 0. Mes superpeers sont superpeer1 et superpeer5." />
+		<argument value="superpeer5" />
 		<argument value="superpeer1" />
 	</process>
-	<process host="superpeer1" function="processSuperPeer.LiensAmis">
-		<argument value="100" />
-		<argument value="1" />
-		<argument value="0.5" />		
-	</process>
-	
-	<!-- Les peers publier -->
-	
-	<process host="peer0" function="processPeer.Publier"><argument value="408" /><argument value="Le carre de mon numero est 0. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer1" function="processPeer.Publier"><argument value="27" /><argument value="Le carre de mon numero est 1. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer2" function="processPeer.Publier"><argument value="896" /><argument value="Le carre de mon numero est 4. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer3" function="processPeer.Publier"><argument value="775" /><argument value="Le carre de mon numero est 9. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer4" function="processPeer.Publier"><argument value="299" /><argument value="Le carre de mon numero est 16. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer5" function="processPeer.Publier"><argument value="315" /><argument value="Le carre de mon numero est 25. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer6" function="processPeer.Publier"><argument value="372" /><argument value="Le carre de mon numero est 36. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer7" function="processPeer.Publier"><argument value="713" /><argument value="Le carre de mon numero est 49. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer8" function="processPeer.Publier"><argument value="20" /><argument value="Le carre de mon numero est 64. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer9" function="processPeer.Publier"><argument value="371" /><argument value="Le carre de mon numero est 81. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer10" function="processPeer.Publier"><argument value="250" /><argument value="Le carre de mon numero est 100. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer11" function="processPeer.Publier"><argument value="418" /><argument value="Le carre de mon numero est 121. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer12" function="processPeer.Publier"><argument value="260" /><argument value="Le carre de mon numero est 144. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer13" function="processPeer.Publier"><argument value="515" /><argument value="Le carre de mon numero est 169. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer14" function="processPeer.Publier"><argument value="439" /><argument value="Le carre de mon numero est 196. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer15" function="processPeer.Publier"><argument value="173" /><argument value="Le carre de mon numero est 225. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer16" function="processPeer.Publier"><argument value="383" /><argument value="Le carre de mon numero est 256. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer17" function="processPeer.Publier"><argument value="521" /><argument value="Le carre de mon numero est 289. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer18" function="processPeer.Publier"><argument value="996" /><argument value="Le carre de mon numero est 324. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer19" function="processPeer.Publier"><argument value="658" /><argument value="Le carre de mon numero est 361. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer20" function="processPeer.Publier"><argument value="668" /><argument value="Le carre de mon numero est 400. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer21" function="processPeer.Publier"><argument value="409" /><argument value="Le carre de mon numero est 441. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer22" function="processPeer.Publier"><argument value="188" /><argument value="Le carre de mon numero est 484. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer23" function="processPeer.Publier"><argument value="231" /><argument value="Le carre de mon numero est 529. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer24" function="processPeer.Publier"><argument value="841" /><argument value="Le carre de mon numero est 576. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer25" function="processPeer.Publier"><argument value="452" /><argument value="Le carre de mon numero est 625. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer26" function="processPeer.Publier"><argument value="262" /><argument value="Le carre de mon numero est 676. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer27" function="processPeer.Publier"><argument value="448" /><argument value="Le carre de mon numero est 729. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer28" function="processPeer.Publier"><argument value="425" /><argument value="Le carre de mon numero est 784. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer29" function="processPeer.Publier"><argument value="373" /><argument value="Le carre de mon numero est 841. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer30" function="processPeer.Publier"><argument value="364" /><argument value="Le carre de mon numero est 900. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer31" function="processPeer.Publier"><argument value="694" /><argument value="Le carre de mon numero est 961. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer32" function="processPeer.Publier"><argument value="120" /><argument value="Le carre de mon numero est 1024. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer33" function="processPeer.Publier"><argument value="951" /><argument value="Le carre de mon numero est 1089. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer34" function="processPeer.Publier"><argument value="142" /><argument value="Le carre de mon numero est 1156. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer35" function="processPeer.Publier"><argument value="649" /><argument value="Le carre de mon numero est 1225. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer36" function="processPeer.Publier"><argument value="325" /><argument value="Le carre de mon numero est 1296. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer37" function="processPeer.Publier"><argument value="15" /><argument value="Le carre de mon numero est 1369. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer38" function="processPeer.Publier"><argument value="506" /><argument value="Le carre de mon numero est 1444. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer39" function="processPeer.Publier"><argument value="147" /><argument value="Le carre de mon numero est 1521. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer40" function="processPeer.Publier"><argument value="999" /><argument value="Le carre de mon numero est 1600. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer41" function="processPeer.Publier"><argument value="969" /><argument value="Le carre de mon numero est 1681. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer42" function="processPeer.Publier"><argument value="564" /><argument value="Le carre de mon numero est 1764. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer43" function="processPeer.Publier"><argument value="813" /><argument value="Le carre de mon numero est 1849. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer44" function="processPeer.Publier"><argument value="433" /><argument value="Le carre de mon numero est 1936. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer45" function="processPeer.Publier"><argument value="704" /><argument value="Le carre de mon numero est 2025. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer46" function="processPeer.Publier"><argument value="123" /><argument value="Le carre de mon numero est 2116. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer47" function="processPeer.Publier"><argument value="631" /><argument value="Le carre de mon numero est 2209. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer48" function="processPeer.Publier"><argument value="25" /><argument value="Le carre de mon numero est 2304. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer49" function="processPeer.Publier"><argument value="846" /><argument value="Le carre de mon numero est 2401. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer50" function="processPeer.Publier"><argument value="125" /><argument value="Le carre de mon numero est 2500. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer51" function="processPeer.Publier"><argument value="342" /><argument value="Le carre de mon numero est 2601. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer52" function="processPeer.Publier"><argument value="930" /><argument value="Le carre de mon numero est 2704. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer53" function="processPeer.Publier"><argument value="928" /><argument value="Le carre de mon numero est 2809. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer54" function="processPeer.Publier"><argument value="189" /><argument value="Le carre de mon numero est 2916. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer55" function="processPeer.Publier"><argument value="294" /><argument value="Le carre de mon numero est 3025. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer56" function="processPeer.Publier"><argument value="450" /><argument value="Le carre de mon numero est 3136. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer57" function="processPeer.Publier"><argument value="134" /><argument value="Le carre de mon numero est 3249. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer58" function="processPeer.Publier"><argument value="886" /><argument value="Le carre de mon numero est 3364. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer59" function="processPeer.Publier"><argument value="47" /><argument value="Le carre de mon numero est 3481. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer60" function="processPeer.Publier"><argument value="238" /><argument value="Le carre de mon numero est 3600. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer61" function="processPeer.Publier"><argument value="816" /><argument value="Le carre de mon numero est 3721. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer62" function="processPeer.Publier"><argument value="551" /><argument value="Le carre de mon numero est 3844. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer63" function="processPeer.Publier"><argument value="685" /><argument value="Le carre de mon numero est 3969. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer64" function="processPeer.Publier"><argument value="808" /><argument value="Le carre de mon numero est 4096. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer65" function="processPeer.Publier"><argument value="979" /><argument value="Le carre de mon numero est 4225. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer66" function="processPeer.Publier"><argument value="377" /><argument value="Le carre de mon numero est 4356. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer67" function="processPeer.Publier"><argument value="407" /><argument value="Le carre de mon numero est 4489. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer68" function="processPeer.Publier"><argument value="489" /><argument value="Le carre de mon numero est 4624. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer69" function="processPeer.Publier"><argument value="438" /><argument value="Le carre de mon numero est 4761. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer70" function="processPeer.Publier"><argument value="144" /><argument value="Le carre de mon numero est 4900. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer71" function="processPeer.Publier"><argument value="592" /><argument value="Le carre de mon numero est 5041. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer72" function="processPeer.Publier"><argument value="844" /><argument value="Le carre de mon numero est 5184. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer73" function="processPeer.Publier"><argument value="280" /><argument value="Le carre de mon numero est 5329. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer74" function="processPeer.Publier"><argument value="294" /><argument value="Le carre de mon numero est 5476. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer75" function="processPeer.Publier"><argument value="22" /><argument value="Le carre de mon numero est 5625. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer76" function="processPeer.Publier"><argument value="629" /><argument value="Le carre de mon numero est 5776. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer77" function="processPeer.Publier"><argument value="688" /><argument value="Le carre de mon numero est 5929. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer78" function="processPeer.Publier"><argument value="121" /><argument value="Le carre de mon numero est 6084. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer79" function="processPeer.Publier"><argument value="571" /><argument value="Le carre de mon numero est 6241. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer80" function="processPeer.Publier"><argument value="695" /><argument value="Le carre de mon numero est 6400. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer81" function="processPeer.Publier"><argument value="82" /><argument value="Le carre de mon numero est 6561. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer82" function="processPeer.Publier"><argument value="652" /><argument value="Le carre de mon numero est 6724. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer83" function="processPeer.Publier"><argument value="64" /><argument value="Le carre de mon numero est 6889. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer84" function="processPeer.Publier"><argument value="736" /><argument value="Le carre de mon numero est 7056. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer85" function="processPeer.Publier"><argument value="868" /><argument value="Le carre de mon numero est 7225. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer86" function="processPeer.Publier"><argument value="272" /><argument value="Le carre de mon numero est 7396. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer87" function="processPeer.Publier"><argument value="570" /><argument value="Le carre de mon numero est 7569. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer88" function="processPeer.Publier"><argument value="540" /><argument value="Le carre de mon numero est 7744. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer89" function="processPeer.Publier"><argument value="931" /><argument value="Le carre de mon numero est 7921. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer90" function="processPeer.Publier"><argument value="385" /><argument value="Le carre de mon numero est 8100. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer91" function="processPeer.Publier"><argument value="744" /><argument value="Le carre de mon numero est 8281. Mes superpeers sont superpeer0 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer0" /></process>
-	<process host="peer92" function="processPeer.Publier"><argument value="350" /><argument value="Le carre de mon numero est 8464. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer93" function="processPeer.Publier"><argument value="299" /><argument value="Le carre de mon numero est 8649. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer94" function="processPeer.Publier"><argument value="358" /><argument value="Le carre de mon numero est 8836. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer95" function="processPeer.Publier"><argument value="306" /><argument value="Le carre de mon numero est 9025. Mes superpeers sont superpeer3 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer3" /></process>
-	<process host="peer96" function="processPeer.Publier"><argument value="124" /><argument value="Le carre de mon numero est 9216. Mes superpeers sont superpeer0 et superpeer3." /><argument value="superpeer3" /><argument value="superpeer0" /></process>
-	<process host="peer97" function="processPeer.Publier"><argument value="143" /><argument value="Le carre de mon numero est 9409. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer98" function="processPeer.Publier"><argument value="622" /><argument value="Le carre de mon numero est 9604. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-	<process host="peer99" function="processPeer.Publier"><argument value="68" /><argument value="Le carre de mon numero est 9801. Mes superpeers sont superpeer3 et superpeer0." /><argument value="superpeer0" /><argument value="superpeer3" /></process>
-
-	<!-- Les peers consulter -->
-	<process host="peer74" function="processPeer.Consulter">
-		<argument value="9110" />
+	<process host="peer1" function="processPeer.Publier">
+		<argument value="469" />
+		<argument
+			value="Le carre de mon numero est 1. Mes superpeers sont superpeer1 et superpeer3." />
+		<argument value="superpeer3" />
 		<argument value="superpeer1" />
 	</process>
-	<process host="peer46" function="processPeer.Consulter">
-		<argument value="9020" />
+	<process host="peer2" function="processPeer.Publier">
+		<argument value="124" />
+		<argument
+			value="Le carre de mon numero est 4. Mes superpeers sont superpeer4 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer3" function="processPeer.Publier">
+		<argument value="374" />
+		<argument
+			value="Le carre de mon numero est 9. Mes superpeers sont superpeer4 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer4" function="processPeer.Publier">
+		<argument value="712" />
+		<argument
+			value="Le carre de mon numero est 16. Mes superpeers sont superpeer2 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer5" function="processPeer.Publier">
+		<argument value="525" />
+		<argument
+			value="Le carre de mon numero est 25. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer6" function="processPeer.Publier">
+		<argument value="846" />
+		<argument
+			value="Le carre de mon numero est 36. Mes superpeers sont superpeer3 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer7" function="processPeer.Publier">
+		<argument value="278" />
+		<argument
+			value="Le carre de mon numero est 49. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer8" function="processPeer.Publier">
+		<argument value="264" />
+		<argument
+			value="Le carre de mon numero est 64. Mes superpeers sont superpeer1 et superpeer1." />
+		<argument value="superpeer1" />
 		<argument value="superpeer1" />
 	</process>
-		<process host="peer41" function="processPeer.Consulter">
-		<argument value="9100" />
+	<process host="peer9" function="processPeer.Publier">
+		<argument value="982" />
+		<argument
+			value="Le carre de mon numero est 81. Mes superpeers sont superpeer5 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer10" function="processPeer.Publier">
+		<argument value="337" />
+		<argument
+			value="Le carre de mon numero est 100. Mes superpeers sont superpeer1 et superpeer3." />
+		<argument value="superpeer3" />
 		<argument value="superpeer1" />
 	</process>
-		<process host="peer35" function="processPeer.Consulter">
-		<argument value="9500" />
+	<process host="peer11" function="processPeer.Publier">
+		<argument value="353" />
+		<argument
+			value="Le carre de mon numero est 121. Mes superpeers sont superpeer3 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer12" function="processPeer.Publier">
+		<argument value="554" />
+		<argument
+			value="Le carre de mon numero est 144. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer13" function="processPeer.Publier">
+		<argument value="714" />
+		<argument
+			value="Le carre de mon numero est 169. Mes superpeers sont superpeer4 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer14" function="processPeer.Publier">
+		<argument value="650" />
+		<argument
+			value="Le carre de mon numero est 196. Mes superpeers sont superpeer5 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer15" function="processPeer.Publier">
+		<argument value="923" />
+		<argument
+			value="Le carre de mon numero est 225. Mes superpeers sont superpeer3 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer16" function="processPeer.Publier">
+		<argument value="136" />
+		<argument
+			value="Le carre de mon numero est 256. Mes superpeers sont superpeer5 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer17" function="processPeer.Publier">
+		<argument value="596" />
+		<argument
+			value="Le carre de mon numero est 289. Mes superpeers sont superpeer5 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer18" function="processPeer.Publier">
+		<argument value="668" />
+		<argument
+			value="Le carre de mon numero est 324. Mes superpeers sont superpeer3 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer19" function="processPeer.Publier">
+		<argument value="142" />
+		<argument
+			value="Le carre de mon numero est 361. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer20" function="processPeer.Publier">
+		<argument value="203" />
+		<argument
+			value="Le carre de mon numero est 400. Mes superpeers sont superpeer4 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer21" function="processPeer.Publier">
+		<argument value="655" />
+		<argument
+			value="Le carre de mon numero est 441. Mes superpeers sont superpeer1 et superpeer1." />
+		<argument value="superpeer1" />
 		<argument value="superpeer1" />
 	</process>
-	<process host="peer43" function="processPeer.Consulter">
-		<argument value="4000" />
+	<process host="peer22" function="processPeer.Publier">
+		<argument value="625" />
+		<argument
+			value="Le carre de mon numero est 484. Mes superpeers sont superpeer2 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer23" function="processPeer.Publier">
+		<argument value="816" />
+		<argument
+			value="Le carre de mon numero est 529. Mes superpeers sont superpeer1 et superpeer2." />
+		<argument value="superpeer2" />
 		<argument value="superpeer1" />
 	</process>
-		<process host="peer94" function="processPeer.Consulter">
-		<argument value="6000" />
+	<process host="peer24" function="processPeer.Publier">
+		<argument value="76" />
+		<argument
+			value="Le carre de mon numero est 576. Mes superpeers sont superpeer5 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer25" function="processPeer.Publier">
+		<argument value="169" />
+		<argument
+			value="Le carre de mon numero est 625. Mes superpeers sont superpeer4 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer26" function="processPeer.Publier">
+		<argument value="972" />
+		<argument
+			value="Le carre de mon numero est 676. Mes superpeers sont superpeer3 et superpeer1." />
 		<argument value="superpeer1" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer27" function="processPeer.Publier">
+		<argument value="698" />
+		<argument
+			value="Le carre de mon numero est 729. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer28" function="processPeer.Publier">
+		<argument value="921" />
+		<argument
+			value="Le carre de mon numero est 784. Mes superpeers sont superpeer4 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer29" function="processPeer.Publier">
+		<argument value="879" />
+		<argument
+			value="Le carre de mon numero est 841. Mes superpeers sont superpeer2 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer30" function="processPeer.Publier">
+		<argument value="920" />
+		<argument
+			value="Le carre de mon numero est 900. Mes superpeers sont superpeer3 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer31" function="processPeer.Publier">
+		<argument value="954" />
+		<argument
+			value="Le carre de mon numero est 961. Mes superpeers sont superpeer2 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer32" function="processPeer.Publier">
+		<argument value="106" />
+		<argument
+			value="Le carre de mon numero est 1024. Mes superpeers sont superpeer3 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer33" function="processPeer.Publier">
+		<argument value="229" />
+		<argument
+			value="Le carre de mon numero est 1089. Mes superpeers sont superpeer2 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer34" function="processPeer.Publier">
+		<argument value="651" />
+		<argument
+			value="Le carre de mon numero est 1156. Mes superpeers sont superpeer2 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer2" />
+	</process>
+	<process host="peer35" function="processPeer.Publier">
+		<argument value="712" />
+		<argument
+			value="Le carre de mon numero est 1225. Mes superpeers sont superpeer4 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer36" function="processPeer.Publier">
+		<argument value="385" />
+		<argument
+			value="Le carre de mon numero est 1296. Mes superpeers sont superpeer4 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer37" function="processPeer.Publier">
+		<argument value="408" />
+		<argument
+			value="Le carre de mon numero est 1369. Mes superpeers sont superpeer3 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer38" function="processPeer.Publier">
+		<argument value="253" />
+		<argument
+			value="Le carre de mon numero est 1444. Mes superpeers sont superpeer4 et superpeer2." />
+		<argument value="superpeer2" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer39" function="processPeer.Publier">
+		<argument value="355" />
+		<argument
+			value="Le carre de mon numero est 1521. Mes superpeers sont superpeer1 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer1" />
+	</process>
+	<process host="peer40" function="processPeer.Publier">
+		<argument value="641" />
+		<argument
+			value="Le carre de mon numero est 1600. Mes superpeers sont superpeer1 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer1" />
+	</process>
+	<process host="peer41" function="processPeer.Publier">
+		<argument value="915" />
+		<argument
+			value="Le carre de mon numero est 1681. Mes superpeers sont superpeer1 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer1" />
+	</process>
+	<process host="peer42" function="processPeer.Publier">
+		<argument value="769" />
+		<argument
+			value="Le carre de mon numero est 1764. Mes superpeers sont superpeer5 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer5" />
+	</process>
+	<process host="peer43" function="processPeer.Publier">
+		<argument value="600" />
+		<argument
+			value="Le carre de mon numero est 1849. Mes superpeers sont superpeer4 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer44" function="processPeer.Publier">
+		<argument value="364" />
+		<argument
+			value="Le carre de mon numero est 1936. Mes superpeers sont superpeer4 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer45" function="processPeer.Publier">
+		<argument value="392" />
+		<argument
+			value="Le carre de mon numero est 2025. Mes superpeers sont superpeer3 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer46" function="processPeer.Publier">
+		<argument value="523" />
+		<argument
+			value="Le carre de mon numero est 2116. Mes superpeers sont superpeer3 et superpeer4." />
+		<argument value="superpeer4" />
+		<argument value="superpeer3" />
+	</process>
+	<process host="peer47" function="processPeer.Publier">
+		<argument value="364" />
+		<argument
+			value="Le carre de mon numero est 2209. Mes superpeers sont superpeer4 et superpeer5." />
+		<argument value="superpeer5" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer48" function="processPeer.Publier">
+		<argument value="290" />
+		<argument
+			value="Le carre de mon numero est 2304. Mes superpeers sont superpeer4 et superpeer1." />
+		<argument value="superpeer1" />
+		<argument value="superpeer4" />
+	</process>
+	<process host="peer49" function="processPeer.Publier">
+		<argument value="631" />
+		<argument
+			value="Le carre de mon numero est 2401. Mes superpeers sont superpeer1 et superpeer3." />
+		<argument value="superpeer3" />
+		<argument value="superpeer1" />
+	</process>
+	<process host="peer50" function="processPeer.Consulter">
+		<argument value="7375" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer51" function="processPeer.Consulter">
+		<argument value="359" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer52" function="processPeer.Consulter">
+		<argument value="8947" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer53" function="processPeer.Consulter">
+		<argument value="8788" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer54" function="processPeer.Consulter">
+		<argument value="1125" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer55" function="processPeer.Consulter">
+		<argument value="9681" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer56" function="processPeer.Consulter">
+		<argument value="6127" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer57" function="processPeer.Consulter">
+		<argument value="2269" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer58" function="processPeer.Consulter">
+		<argument value="7618" />
+		<argument value="superpeer0" />
+	</process>
+	<process host="peer59" function="processPeer.Consulter">
+		<argument value="499" />
+		<argument value="superpeer0" />
 	</process>
 </platform>
