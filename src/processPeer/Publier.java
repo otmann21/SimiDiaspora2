@@ -78,7 +78,7 @@ public class Publier extends Process {
 
 	/**
 	 * Methode permettant d'envoyer une publication. Elle renvoie un booleen indiquant si tout s'est bien deroule.
-	 * @return
+	 * @return resultat
 	 * @throws TransferFailureException
 	 * @throws HostFailureException
 	 * @throws TimeoutException

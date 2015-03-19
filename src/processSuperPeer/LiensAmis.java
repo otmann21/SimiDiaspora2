@@ -1,5 +1,6 @@
 package processSuperPeer;
 import java.util.ArrayList;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,15 +12,15 @@ import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Task;
 import taches.Message;
 import taches.typeMessage;
-
 import java.lang.Math;
+
+/** Ce process gere les liens d'amities du reseau entier.
+ * C'est le seul process completement centralise.
+ *
+ * @author hugo
+ */
 public class LiensAmis extends Process{
 	
-	/** Ce process gere les liens d'amities du reseau entier.
-	 * C'est le seul process completement centralise.
-	 *
-	 * @author hugo
-	 */
 	
 	
 	/**
