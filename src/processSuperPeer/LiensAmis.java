@@ -42,7 +42,8 @@ public class LiensAmis extends Process{
 	int nbPeers ;
 
 	/**
-	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
+	 * Le constructeur prend en argument l'hote, le nom, le nombre de peers du reseau, 
+	 * et le mode de remplissage (0 ou 1).
 	 * 
 	 * On rempli ensuite le tableau topo n * n de facon raisonnable,
 	 * plausible et un peu aleatoire. Par exemple en generant un nombre
@@ -54,15 +55,23 @@ public class LiensAmis extends Process{
 	public LiensAmis(Host host, String name, String[]args){
 		super(host, name, args);
 		mbox = host.getName()+"_LiensAmis";
+<<<<<<< HEAD
 		
 		//La ligne de gros CHEAT
 		annuaire.put("peer0", "superpeer0");
+=======
+>>>>>>> ff2e53e09b189fc1a8cfb62763250edba86826be
 
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
 		
 		this.nbPeers = n ;
 		
+		int modeRemplissage = Integer.parseInt(args[1]);
+		//Cet entier, qui vaut 0 pour le remplissage 'facile', peut prendre d'autres valeurs.
+		//Si l'on rentre 1, on obtient un mode de remplissage un peu plus aléatoire et crédible.
+		
+		if (modeRemplissage==0){
 		//remplissage du tableau des liens d'amitie. Le peer0 est ami avec tout le monde.
 		this.topo = new boolean [n][n] ;
 
@@ -80,6 +89,12 @@ public class LiensAmis extends Process{
 			topo[0][i] = true;
 			topo[i][0] = true;
 		}
+		}
+		
+		if(modeRemplissage==1){
+			
+		}
+		
 	}
 
 	public String consulterAnnuaire(String peer){
@@ -101,6 +116,7 @@ public class LiensAmis extends Process{
 				liste.add(nbAmis, ami);
 				nbAmis++;
 			}
+
 		}
 		return liste;
 	}
@@ -158,13 +174,13 @@ public class LiensAmis extends Process{
 				case liste_ami:
 					//récupération des arguments et appel de la méthode sontAmis.
 					Message<String> requete2 = msg;
-					String peer = requete2.getExpediteur();
+					String peer = requete2.getPeerConcerne();
 					ArrayList<String[]> rep2 = listeAmis(peer);
-					//création et envoi du message au SP.
-					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2, requete2);
-					reponse2.setType(typeMessage.reponse_listeAmis);
 
-					reponse2.isend(requete2.getMboxReponse());
+					//création et envoi du message au SP.
+					Message<ArrayList<String[]>> reponse2 = new Message<ArrayList<String[]>>(rep2);
+					reponse2.setType(typeMessage.reponse_listeAmis);
+					reponse2.isend(requete2.getMboxReponse());	
 					break;
 				case demandeSPWall:
 					//récupération des arguments et appel de la méthode consulterAnnuaire.
@@ -178,7 +194,10 @@ public class LiensAmis extends Process{
 					break;
 				}
 			}
+<<<<<<< HEAD
 			Process.sleep(1);
+=======
+>>>>>>> ff2e53e09b189fc1a8cfb62763250edba86826be
 		}
 	}
 }
