@@ -70,9 +70,11 @@ public class Consulter extends Process{
 		boolean resultat = (lAmis.getType()==typeMessage.reponse_listeAmis) && (lAmis.getHashCodeMessagePrecedent()==recupListeAmis.hashCode());
 		if (resultat){
 			ArrayList<String[]> lAmis2 = new ArrayList<String[]>();
-			lAmis2 = (ArrayList<String[]>) lAmis.getMessage(); 
-						this.peer = lAmis2.get(0)[0];
-						this.spWall = lAmis2.get(0)[1];
+			lAmis2 = (ArrayList<String[]>) lAmis.getMessage();
+			int n = lAmis2.size();
+			int indice = (int) Math.round(n * Math.random());
+			this.peer = lAmis2.get(indice)[0];
+			this.spWall = lAmis2.get(indice)[1];
 			//on choisi le premier peer ami a consulter.
 		}
 
@@ -138,7 +140,9 @@ public class Consulter extends Process{
 		ArrayList<String[]> mur = this.recupereMur();
 
 		if(mur!=null&&!mur.isEmpty()){
-			for(String[] el: mur){
+			ArrayList<String[]> mur2 = (ArrayList<String[]>) mur.clone();
+
+			for(String[] el: mur2){
 				String contenu = recuperePubli(el[0],el[1]);
 
 				liste.add(contenu);

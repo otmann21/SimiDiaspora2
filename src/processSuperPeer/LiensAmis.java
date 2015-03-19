@@ -70,7 +70,7 @@ public class LiensAmis extends Process{
 		mbox = host.getName()+"_LiensAmis";
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
-
+		
 		this.nbPeers = n ;
 
 		int modeRemplissage = Integer.parseInt(args[1]);
@@ -82,6 +82,8 @@ public class LiensAmis extends Process{
 		//Pré-remplissage.
 		
 		for(int i=0 ; i<n;i++){ // on met tout le monde a false.
+			//par defaut tous les peers ont superpeer0 comme spGestionMur
+			annuaire.put("peer"+i, "superpeer0");
 			for(int j=0 ; j<n;j++){
 				topo[i][j]=false;
 			}
