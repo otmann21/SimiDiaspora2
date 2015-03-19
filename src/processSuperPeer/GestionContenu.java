@@ -63,13 +63,7 @@ public class GestionContenu extends Process{
 		verifAm.setPeerConcerne(peer1);
 		verifAm.setPeerConcerne2(peer2);
 		verifAm.isend(SPLiensAmis);
-		
-		//on attend pour laisser au message le temps d'arriver.
-		try {
-			Process.sleep(100); //si ce temps n'est pas suffisant, on ajoutera du temps.
-		} catch (HostFailureException e) {
-			e.printStackTrace();
-		}
+
 
 		//On regarde si l'on reçoie le message.
 		if(Task.listen(mbox)){
@@ -107,7 +101,7 @@ public class GestionContenu extends Process{
 					break;
 				}
 			}
-			Process.sleep(100);
+			Process.sleep(1);
 		}
 	}
 
@@ -145,7 +139,7 @@ public class GestionContenu extends Process{
 		String reponse=null;
 		
 		if(donnees.containsKey(posteur)){
-			if(donnees.containsKey(hash)){
+			if(donnees.get(posteur).containsKey(hash)){
 				reponse = donnees.get(posteur).get(hash);
 			}
 		}

@@ -44,7 +44,7 @@ public class Publier extends Process {
 	}
 
 	public void main(String[] arg0) throws MsgException {
-		Process.sleep(100);
+		Process.sleep(offset);
 		if(envoiPublication()) actualiseMur();
 		//		Task t = new Task();
 		//		t.send(spContenu+"_GestionContenu");
@@ -56,9 +56,8 @@ public class Publier extends Process {
 		Message<String> requetePublication = new Message<String>(publication);
 		requetePublication.setType(typeMessage.ajout_publication);
 		requetePublication.setMboxReponse(this.mbox);
-		requetePublication.isend(spContenu+"_GestionContenu");
+		requetePublication.send(spContenu+"_GestionContenu");
 
-		Process.sleep(100);
 		try {
 			Message msg= (Message) Task.receive(mbox);
 			resultat = (msg.getType()==typeMessage.confirmation) && (msg.getHashCodeMessagePrecedent()==requetePublication.hashCode()) && ((Boolean) msg.getMessage());
@@ -97,7 +96,6 @@ public class Publier extends Process {
 		majMur.setSuperPeerConcerne(spContenu);
 		majMur.send(spMur+"_GestionMur");
 
-		//Process.sleep(100);
 
 		try {
 			Message msg= (Message) Task.receive(mbox);

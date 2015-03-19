@@ -111,14 +111,13 @@ public class Consulter extends Process{
 		demandePubli.setPeerConcerne(this.peer);
 		demandePubli.setMboxReponse(this.mbox);
 		demandePubli.setType(typeMessage.requete_publication);
-		demandePubli.isend(SPContenu);
+		demandePubli.send(SPContenu+"_GestionContenu");
 
-		if(Task.listen(mbox)){
-			Message<String> publication= (Message) Task.receive(mbox);
-			boolean res = (publication.getType()==typeMessage.reponse_publication) && (publication.getHashCodeMessagePrecedent()==demandePubli.hashCode());
-			if (res){
-				publi = (String) publication.getMessage();
-			}
+
+		Message<String> publication= (Message) Task.receive(mbox);
+		boolean res = (publication.getType()==typeMessage.reponse_publication) && (publication.getHashCodeMessagePrecedent()==demandePubli.hashCode());
+		if (res){
+			publi = (String) publication.getMessage();
 		}
 
 		return publi ;
@@ -142,24 +141,28 @@ public class Consulter extends Process{
 
 		ArrayList<String[]> mur = this.recupereMur();
 
-		Iterator it = mur.iterator();
+		if(mur!=null&&!mur.isEmpty()){
+			for(String[] el: mur){
+				String contenu = recuperePubli(el[0],el[1]);
 
-		while (it.hasNext()){
-			String[] el = (String[]) it.next();
-			String contenu = recuperePubli(el[0],el[1]);
-			Msg.info(el[0] + "       "+ el[1]);
-			liste.add(contenu);
-			
+				liste.add(contenu);
+			}
 		}
 		return liste ;
 	}
 
 	public void main(String[] args) throws MsgException{
-		Process.sleep(500);
+		Process.sleep(offset);
 		ArrayList<String> liste = this.consulterMur(this.peer);
-		for(String s : liste){
-			Msg.info(s);
+		String out = host.getName()+" consulte le mur de " +peer+".";
+		if(liste.isEmpty()){out+=" Il est vide.";}
+		else{
+			out+=" Il y a :";
+			for(String s : liste){
+				out+="\n'"+s+"'";
+			}
 		}
+		Msg.info(out);
 	}
 
 }

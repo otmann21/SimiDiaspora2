@@ -56,7 +56,7 @@ public class LiensAmis extends Process{
 		mbox = host.getName()+"_LiensAmis";
 		
 		//La ligne de gros CHEAT
-		annuaire.put("peer0", "superpeer1");
+		annuaire.put("peer0", "superpeer0");
 
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
@@ -178,7 +178,7 @@ public class LiensAmis extends Process{
 					break;
 				}
 			}
-			Process.sleep(100);
+			Process.sleep(1);
 		}
 	}
 }

@@ -77,7 +77,7 @@ public class GestionMur extends Process{
 					break;
 				}
 			}
-			Process.sleep(100);
+			Process.sleep(1);
 		}
 	}
 	
