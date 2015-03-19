@@ -126,10 +126,6 @@ public class Consulter extends Process{
 	 * consulterMur retourne toutes les publications du mur.
 	 * On appelle x fois la fonction recupere publi.
 	 * On n'envoie pas le resultat avec un message.
-<<<<<<< HEAD
-=======
-	 * 
->>>>>>> d9ddc3723e9bd0a4af69d22005bc12719e568e3b
 	 * @param peer : le pair dont on consulte le mur.
 	 * @return la liste de toutes les publications du mur.
 	 * @throws TimeoutException 
