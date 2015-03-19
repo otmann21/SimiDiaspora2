@@ -54,7 +54,7 @@ public class Consulter extends Process{
 	 * On passe donc en argument, apres l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
 	 * @param host : Hote sur lequel tourne le process. 
 	 * @param name : Nom du process.
-	 * @param args : 
+	 * @param args : offset, SPAmi.
 	 */
 
 	public Consulter(Host host, String name, String[]args){
@@ -64,9 +64,9 @@ public class Consulter extends Process{
 		mbox = host.getName()+"_Consulter";
 	}
 
-	/**recupere l'arraylist contenant le hache et le SPContenu de chaque publication.
-	 * Quand un peer demande à voir du contenu, on lui donne le contenu de son premier peer ami. 
-	 * celui-ci appelle la méthode recupere mur.
+	/**Recupere l'arraylist contenant le hache et le SPContenu de chaque publication.
+	 * Quand un peer demande à voir du contenu, on lui donne le contenu d'un peer amiau hasard. 
+	 * Celui-ci appelle la méthode recupere mur.
 	 * @throws TimeoutException 
 	 * @throws HostFailureException 
 	 * @throws TransferFailureException 
@@ -97,8 +97,6 @@ public class Consulter extends Process{
 			this.spWall = lAmis2.get(indice)[1];
 		}
 
-		//		}
-
 
 		// Demande de consultation du mur du premier de ses amis.
 
@@ -108,23 +106,28 @@ public class Consulter extends Process{
 		reqWall.setMboxReponse(this.mbox);
 		reqWall.send(spWall+"_GestionMur"); //envoi du message au spWall, puis attente de sa réponse.
 
-
-
 		Message msg= (Message) Task.receive(mbox);
 
 		boolean resultat1 = (msg.getType()==typeMessage.reponseMur) && (msg.getHashCodeMessagePrecedent()==reqWall.hashCode());
 		if (resultat1){
 			listePubli = (ArrayList<String[]>) msg.getMessage();
-
 		}
 
 		return listePubli;
 	}
 
+	/**
+	 * Cette methode permet de recuperer la publication claire a partir de la publication chiffree.
+	 * @param hache
+	 * @param SPContenu
+	 * @return String publi
+	 * @throws TransferFailureException
+	 * @throws HostFailureException
+	 * @throws TimeoutException
+	 */
 	public String recuperePubli(String hache, String SPContenu) throws TransferFailureException, HostFailureException, TimeoutException{ //sp contenu attribut inutile
 
-		String publi = ""; //la publi que l'on va renvoyer.
-
+		String publi = "";
 
 		//creation et envoi du message à SPContenu
 		Message<String> demandePubli = new Message<String>();
@@ -144,9 +147,7 @@ public class Consulter extends Process{
 		return publi ;
 	}
 	/**
-	 * consulterMur retourne toutes les publications du mur.
-	 * On appelle x fois la fonction recupere publi.
-	 * On n'envoie pas le resultat avec un message.
+	 * ConsulterMur retourne toutes les publications du mur.
 	 * @param peer : le pair dont on consulte le mur.
 	 * @return la liste de toutes les publications du mur.
 	 * @throws TimeoutException 
@@ -170,6 +171,9 @@ public class Consulter extends Process{
 		return liste ;
 	}
 
+	/**
+	 * Classe main de la classe Consulter. Elle appelle la methode consulterMur.
+	 */
 	public void main(String[] args) throws MsgException{
 		Process.sleep(offset);
 		ArrayList<String> liste = this.consulterMur(this.peer);

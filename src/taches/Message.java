@@ -19,7 +19,14 @@ public class Message<T> extends Task{
 	 * Tous les types utlises sont listes dans l'enum typeMessage.
 	 */
 	private typeMessage type;
+	/**
+	 * Expediteur du message.
+	 */
 	private String expediteur;
+	
+	/**
+	 * Destinataire du message.
+	 */
 	private String destinataire;
 	
 	/**
@@ -33,26 +40,21 @@ public class Message<T> extends Task{
 	private String peerConcerne2=null;
 	
 	/**
-	 * SuperPeerConcerne, meme principe que peerConcerne.
 	 * Il peut y avoir deux peers concernes, comme dans verif_amis (peer1, peer2).
 	 */
 	
 	private String superPeerConcerne=null;
 	
 	/**
-	 * Lorsque l'on repond a une requete, on precisera le hash de l'objet Message 
-	 * auquel on repond.
-	 * Le hash en question sera celui donne par la methode hashCode() de la classe 
-	 * Object.
-	 * Par defaut cet attribut vaut 0, dans le cas ou ce n'est pas une reponse, 
-	 * mais le debut de la communication.
+	 * Lorsque l'on repond a une requete, on precisera le hash de l'objet Message auquel on repond.
+	 * Le hash en question sera celui donne par la methode hashCode() de la classe Object.
+	 * Par defaut cet attribut vaut 0, dans le cas ou ce n'est pas une reponse, mais le debut de la communication.
 	 */
 	
 	private int hashCodeMessagePrecedent = 0;
 	
 	/**
-	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment 
-	 * lors des requetes aux superpeers.
+	 * Peut servir a indiquer sur quelle mbox renvoyer la réponse, notamment lors des requetes aux superpeers.
 	 */
 	private String mboxReponse=null;
 	

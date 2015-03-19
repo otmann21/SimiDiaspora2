@@ -18,7 +18,7 @@ import taches.typeMessage;
 
 /**
  * Ce process va stocker les walls d'utilisateurs.
- * Pour l'instant, ne verifie pas que les utilisateurs sont amis avant de repondre.
+ * Chaque peer a un Super Peer associe qui gere son mur.
  * 
  * @author otmann
  *
@@ -28,28 +28,27 @@ public class GestionMur extends Process{
 
 	/**
 	 * Dans la HashMap, les cle sont les noms des utilisateurs dont on stocke les murs.
-	 * Un mur est une liste de doublet (hash de la publi, nom du superpeer_gestioncontenu qui la stock)
+	 * Un mur est une liste de doublet (hash de la publi, nom du superpeer_gestioncontenu qui la stocke)
 	 */
 	HashMap<String, ArrayList<String[]>> donnees;
 
 	/**
-	 * La boite aux lettres sur laquelle le sp va écouter les requetes.
+	 * La boite aux lettres sur laquelle le sp va ecouter les requetes.
 	 * 'nomHost' + '_GestionMur'
 	 */
 	private String mbox;
-	/**
-	 * c'est quoi au juste une boite au lettres, on en avait pas vraiment parlé. J'en 
-	 * ai besoin moi aussi dans mes process ?
-	 * @param host
-	 * @param name
-	 * @param args
-	 */
 	
 	/**
 	 * Le nomdu spLiensAmis a qui le spMur dira de quels peers il s'occupe.
 	 */
 	private String spLiensAmis;
 	
+	/**
+	 * Constructeur de la classe. 
+	 * @param host
+	 * @param name
+	 * @param args
+	 */
 	public GestionMur(Host host, String name, String[]args) {
 		super(host,name,args);
 		
@@ -57,7 +56,10 @@ public class GestionMur extends Process{
 		this.mbox = host.getName()+"_GestionMur";
 		this.spLiensAmis = args[0];
 	}
-
+	
+/**
+ * Methode main de la classe.
+ */
 	public void main(String[] arg0) throws MsgException {
 		while(true){
 			
@@ -82,7 +84,6 @@ public class GestionMur extends Process{
 					Message<Boolean> confirmation = new Message<Boolean>(true, maj);
 					confirmation.setType(typeMessage.confirmation);
 					confirmation.isend(maj.getMboxReponse());
-
 					break;
 				}
 			}
@@ -90,6 +91,15 @@ public class GestionMur extends Process{
 		}
 	}
 	
+	/**
+	 * Cette methode ajoute une publication au Super Peer contenu qui l'a a sa charge.
+	 * @param expediteur
+	 * @param hash
+	 * @param superpeer_contenu
+	 * @throws TransferFailureException
+	 * @throws HostFailureException
+	 * @throws TimeoutException
+	 */
 	public void ajoutPublicationDansMur(String expediteur, String hash, String superpeer_contenu) throws TransferFailureException, HostFailureException, TimeoutException{
 		
 		//si on n'a pas encore de donnees sur le mur du gars, on ajoute une entree
@@ -105,6 +115,11 @@ public class GestionMur extends Process{
 		donnees.get(expediteur).add(new String[]{hash, superpeer_contenu});
 	}
 	
+	/**
+	 * La methode reponseMur renvoie le mur chiffre du peer dont on veut consulter le mur.
+	 * @param utilisateur
+	 * @return
+	 */
 	public ArrayList<String[]> reponseMur(String utilisateur){
 		
 		ArrayList<String[]> reponse = null;

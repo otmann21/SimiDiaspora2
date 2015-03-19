@@ -26,12 +26,37 @@ import taches.typeMessage;
  */
 public class Publier extends Process {
 
+	/**
+	 * L'offset permet d'attendre un certain delai pour laisser aux messages le temps d'arriver.
+	 */
 	private int offset;
+	
+	/**
+	 * Publication que le pair souhaite publier.
+	 */
 	private String publication;
+	
+	/**
+	 * Adresse du Super Peer contenu de cette publication.
+	 */
 	private String spContenu;
+	
+	/**
+	 * Adresse du super Peer mur.
+	 */
 	private String spMur;
+	
+	/**
+	 * Boite aux lettres du process.
+	 */
 	private String mbox;
 
+	/**
+	 * Constructeur de la classe.
+	 * @param host
+	 * @param name
+	 * @param args
+	 */
 	public Publier(Host host, String name, String[]args){
 		super(host,name,args);
 
@@ -43,13 +68,21 @@ public class Publier extends Process {
 		mbox = host.getName()+"_Publier";
 	}
 
+	/**
+	 * Methode main de la classe. ELle ne fait quelque chose que si une publication est envoyee.
+	 */
 	public void main(String[] arg0) throws MsgException {
 		Process.sleep(offset);
 		if(envoiPublication()) actualiseMur();
-		//		Task t = new Task();
-		//		t.send(spContenu+"_GestionContenu");
 	}
 
+	/**
+	 * Methode permettant d'envoyer une publication. Elle renvoie un booleen indiquant si tout s'est bien deroule.
+	 * @return
+	 * @throws TransferFailureException
+	 * @throws HostFailureException
+	 * @throws TimeoutException
+	 */
 	public boolean envoiPublication() throws TransferFailureException, HostFailureException, TimeoutException{
 
 		boolean resultat=false;
@@ -68,9 +101,15 @@ public class Publier extends Process {
 			e.printStackTrace();
 		}
 		return resultat;
-
 	}
 
+	/**
+	 * Cette methode permet, apres publication, d'actualiser le mur dans le Super Peer concerne.
+	 * @return
+	 * @throws TransferFailureException
+	 * @throws HostFailureException
+	 * @throws TimeoutException
+	 */
 	public boolean actualiseMur() throws TransferFailureException, HostFailureException, TimeoutException{
 
 		boolean resultat=false;

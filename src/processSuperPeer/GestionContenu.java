@@ -20,9 +20,7 @@ import taches.typeMessage;
 
 /**
  * Ce process va stocker les publications des utilisateurs.
- * 
- * PB : dans le main, on rentre dans la condition du Task.listen, mais le Task.receive ne finit pas.
- * 
+ *  
  * @author otmann
  *
  */
@@ -30,23 +28,29 @@ import taches.typeMessage;
 public class GestionContenu extends Process{
 
 	/**
-	 * Dans la Hashmap de haut niveau, les clés sont les noms des utilisateurs.
-	 * Dans les petites Hashmaps, les clés sont des hash de publications, 
+	 * Dans la Hashmap de haut niveau, les cles sont les noms des utilisateurs.
+	 * Dans les petites Hashmaps, les cles sont des hash de publications, 
 	 * et les valeurs sont les publications.
 	 */
 	HashMap<String, HashMap<String, String>> donnees;
 
 	/**
-	 * La boite aux lettres sur laquelle le sp va écouter les requetes.
+	 * La boite aux lettres sur laquelle le Super Peer va ecouter les requetes.
 	 * 'nomHost' + '_GestionContenu'
 	 */
 	private String mbox;
 
 	/**
-	 * adresse du SP Liens amis, que l'on va devoir contacter.
+	 * Adresse du SP Liens amis, que l'on va devoir contacter.
 	 */
 	private String SPLiensAmis; 
 
+	/**
+	 * Constructeur.
+	 * @param host
+	 * @param name
+	 * @param args
+	 */
 	public GestionContenu(Host host, String name, String[]args) {
 		super(host,name,args);
 
@@ -88,9 +92,15 @@ public class GestionContenu extends Process{
 		}
 	}
 
+	/**
+	 * La methode ajoutContenu permet, lors d'une publication, d'ajouter le contenu de cette publication dans le
+	 * Super Peer qui l'a en charge.
+	 * @param publication
+	 * @param expediteur
+	 */
 	public void ajoutContenu(String publication, String expediteur){
 
-		//On vérifie si on a déjà une entrée pour le peer qui veut poster, sinon on en crée une
+		//On vérifie si on a déjà une entrée pour le peer qui veut poster, sinon on en crée une.
 		if(!donnees.containsKey(expediteur)){
 			donnees.put(expediteur, new HashMap<String, String>());
 		}
@@ -117,6 +127,12 @@ public class GestionContenu extends Process{
 		}
 	}
 
+	/**
+	 * Cette methode permet le systeme d'acknowledgment mis en oeuvre dans les communications.
+	 * @param posteur
+	 * @param hash
+	 * @return
+	 */
 	public String reponseContenu(String posteur, String hash){
 
 		String reponse=null;
@@ -130,6 +146,15 @@ public class GestionContenu extends Process{
 		return reponse;
 	}
 	
+	/**
+	 * Cette methode est chargee de demander a LiensAmis si les deux peer passes en arguments sont bien amis.
+	 * @param peer1
+	 * @param peer2
+	 * @return pairAmi
+	 * @throws TransferFailureException
+	 * @throws HostFailureException
+	 * @throws TimeoutException
+	 */
 	public boolean verif(String peer1, String peer2) throws TransferFailureException, HostFailureException, TimeoutException{
 		boolean pairAmi = false ;
 

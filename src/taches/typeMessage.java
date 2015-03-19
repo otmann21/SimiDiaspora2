@@ -22,8 +22,8 @@ requete_publication,
 */	
 reponse_publication,
 /**
+ * * Message<String>
 * Lorsque l'un peer demande a supeerpeer_GestionContenu de s'ajouter une publication.
-* Message<String>
 * message : la publication
 */	
 ajout_publication,
@@ -46,28 +46,32 @@ requete_mur,
 */
 reponseMur,
 /**
-* Confirmation est un Message<Boolean>
+* Message<Boolean>
 * Un simple boolean pour dire si une requete a ete correctement traitee.
 */
 confirmation,
 /**
+ * Message<Boolean>
 * on utilise le message verif_ami lorsque l'on demande si i et j sont bien amis
 * au process SP qui gere les liens d'amitie.
 */
 verif_ami,
 /**
+ * Message<ArrayList<String[]>>
 * on utilise le type de message liste_ami quand on veut connaitre la liste
 * des amis d'un pair donne.
 */
 liste_ami,
 /**
+ *Message<Boolean>
 * Le type de message reponse_sontAmis correspond a une reponse de la part du Process SP liensAmis,
 * qui vient de verifier si deux peers sont amis.
 * Le corps du message est le booleen.
 */
 reponse_sontAmis,
 /**
-* Idem. Le Process SP listeAmis renvoie par ce message la liste des amis d'un peer.
+ *Message<ArrayList<String>>
+* Le Process SP listeAmis renvoie par ce message la liste des amis d'un peer.
 */
 reponse_listeAmis,
 

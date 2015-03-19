@@ -15,8 +15,8 @@ import taches.typeMessage;
 import java.lang.Math;
 public class LiensAmis extends Process{
 	
-	/** Ce process gère les liens d'amitiés du réseau entier.
-	 * C'est le seul process complètement centralisé.
+	/** Ce process gere les liens d'amities du reseau entier.
+	 * C'est le seul process completement centralise.
 	 *
 	 * @author hugo
 	 */
@@ -47,6 +47,7 @@ public class LiensAmis extends Process{
 	 */
 	
 	int nbPeers ;
+	
 	/**
 	 * Le constructeur prend d'abord en argument l'hote et le nom.
 	 * Puis le tableau args, contenant : 
@@ -60,10 +61,8 @@ public class LiensAmis extends Process{
 	 * Dans ce second mode, on passe la probabilite apres l'argument "1".
 	 * 
 	 * @param peer
-	 * @return
+	 * @return un objet de type LiensAmis.
 	 */
-
-	
 	public LiensAmis(Host host, String name, String[]args){
 		
 		super(host, name, args);
@@ -120,6 +119,13 @@ public class LiensAmis extends Process{
 
 
 	}
+	
+	/**
+	 * Methode permettant de consulter l'annuaire. On entre un pair, et l'annaire donne le Super Peer Wall
+	 * correspondant.
+	 * @param peer
+	 * @return
+	 */
 	public String consulterAnnuaire(String peer){
 		String spMur="";
 		if(this.annuaire.containsKey(peer)) spMur=this.annuaire.get(peer);
@@ -127,9 +133,8 @@ public class LiensAmis extends Process{
 	}
 	
 	/**
-	 * La methode liste amis retourne la liste des (amis, SPWall)
-	 * du pair passe en argument. Elle retourne donc
-	 * une liste de couple.
+	 * La methode liste amis retourne la liste des (amis, Super Peer Wall)
+	 * du pair passe en argument. Elle retourne donc une liste de couple.
 	 */
 	
 	public ArrayList<String[]> listeAmis(String peer){
@@ -146,6 +151,7 @@ public class LiensAmis extends Process{
 		}
 		return liste;
 	}
+	
 	/**
 	 * La methode nbAmis renvoie le nombre d'amis du Peer passe en parametres.
 	 * @param peer
@@ -169,27 +175,23 @@ public class LiensAmis extends Process{
 	/**
 	 * la methode sontAmis(peer1, peer2), tres explicitement,
 	 * renvoie le booleen indiquant si oui ou non ils sont amis.
-	 *
-	 * Pour pouvoir acceder à ce booleen avec des entiers,
-	 * on cree une methode entierPeer, renvoyant l'entier du pair.
-	 * Tous les pairs ont pour nom "peer" + entierPeer.
 	 * @param args
 	 */
 	public boolean sontAmis(String peer1, String peer2){
 		return topo[this.entierPeer(peer1)][this.entierPeer(peer2)] ;
 	}
 	
+	/**
+	 * Comme explique, cette methode renvoie l'entier correspondant
+	 * a un peer donne. Tous les pairs ont pour nom "peer" + entierPeer.
+	 * @param args
+	 */
 	public int entierPeer(String peer){ //Convertit 
 		String str = peer.substring(4);
 		int entier = Integer.parseInt(str);
 		return entier;
 	}
 
-	/**
-	 * Comme explique, cette methode renvoie l'entier correspondant
-	 * a un peer donne.
-	 * @param args
-	 */
 	public void main(String[] args) throws MsgException{
 
 		while(true){
