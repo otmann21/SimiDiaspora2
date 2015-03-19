@@ -11,6 +11,8 @@ import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Task;
 import taches.Message;
 import taches.typeMessage;
+
+import java.lang.Math;
 public class LiensAmis extends Process{
 	
 	/** Ce process gère les liens d'amitiés du réseau entier.
@@ -18,6 +20,8 @@ public class LiensAmis extends Process{
 	 *
 	 * @author hugo
 	 */
+	
+	
 	/**
 	 * Cet attribut est une matrice symetrique de booleens.
 	 * Si N est le nombre de peers,il possede N lignes et N collones.
@@ -25,26 +29,43 @@ public class LiensAmis extends Process{
 	 *
 	 */
 	boolean [][] topo;
+	
 	/**
 	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
 	 * Le peer_i est en position i dans la liste.
 	 */
 	HashMap<String, String> annuaire=new HashMap<String, String>();
 	
+	/**
+	 * mbox est la boite aux lettres sur laquelle on peut joindre le Super Peer LiensAmis.
+	 * Chaque peer a une boite aux lettres.
+	 */
 	private String mbox;
+	
+	/**
+	 * Nombre de peer du reseau.
+	 */
+	
 	int nbPeers ;
 	/**
-	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
+	 * Le constructeur prend d'abord en argument l'hote et le nom.
+	 * Puis le tableau args, contenant : 
+	 * args 0 : nombre de peer.
+	 * args 1 : mode de remplissage.
+	 * Si on choisi le mode de remplissage numéro 1, on précise la proba dans l'argument d'apres.
 	 *
-	 * On rempli ensuite le tableau topo n * n de facon raisonnable,
-	 * plausible et un peu aleatoire. Par exemple en generant un nombre
-	 * d'amis aleatoire.On a choisi en premier lieu de mettre tout le monde ami avec le peer0.
+	 * Les deux modes de remplissage sont les suivants :
+	 * 0 - Le pair 0 est ami avec tout le monde. On entre 0 pour cela.
+	 * 1 - Tous les pairs ont une probabilite p d'etre amis avec un autre pair.
+	 * Dans ce second mode, on passe la probabilite apres l'argument "1".
+	 * 
 	 * @param peer
 	 * @return
 	 */
 
 	
 	public LiensAmis(Host host, String name, String[]args){
+		
 		super(host, name, args);
 		mbox = host.getName()+"_LiensAmis";
 		int n = Integer.parseInt(args[0]);
@@ -65,13 +86,12 @@ public class LiensAmis extends Process{
 				topo[i][j]=false;
 			}
 		}
+		
 		for(int i=0 ; i<n;i++){
 			topo[i][i] = true; //on est par defaut ami avec soi-meme.
 		}
 
-		if (modeRemplissage==0){
-
-			//remplissage du tableau des liens d'amitie. Le peer0 est ami avec tout le monde.
+		if (modeRemplissage==0){ //Premier type de remplissage. Le peer0 est ami avec tout le monde.
 
 			for(int i=0 ; i<n;i++){ //le peer0 est ami avec tout le monde.
 				topo[0][i] = true;
@@ -79,20 +99,20 @@ public class LiensAmis extends Process{
 			}
 		}
 
-		if(modeRemplissage==1){ //chaque pair va etre ami en moyenne avec 1/5 des pairs du réseau.
+		if(modeRemplissage==1){ 
+			//chaque pair a une probabilité p d'être ami avec un autre pair.
+			//p est passé en paramètres juste après le 1.
+			
+			double proba = new Double(args[2]);
+			
 			for(int i=0 ; i<n;i++){
 				
-				//Calcul du nombre d'amis de i.
-				double rd = 2 * Math.random() / 5; //on obtient une variable aléatoire d'esperance 1/5.
-				int nbAmis = (int) Math.round(nbPeers * rd);
-				
 				for(int j=0 ; j<n;j++){
-					
-					
-					topo[i][j]=false;
+					if (Math.random()<proba){
+						topo[i][j] = true;
+					}
 				}
 			}
-
 		}
 
 
@@ -102,6 +122,13 @@ public class LiensAmis extends Process{
 		if(this.annuaire.containsKey(peer)) spMur=this.annuaire.get(peer);
 		return spMur;
 	}
+	
+	/**
+	 * La methode liste amis retourne la liste des (amis, SPWall)
+	 * du pair passe en argument. Elle retourne donc
+	 * une liste de couple.
+	 */
+	
 	public ArrayList<String[]> listeAmis(String peer){
 		ArrayList<String[]> liste = new ArrayList<String[]>();
 		int nbAmis = 0;
@@ -134,14 +161,8 @@ public class LiensAmis extends Process{
 		return nbAmis;
 	}
 
-	/**
-	 * La methode liste amis retourne la liste des (amis, SPWall)
-	 * du pair passe en argument. Elle retourne donc
-	 * une liste de couple.
-	 */
-	public boolean sontAmis(String peer1, String peer2){
-		return topo[this.entierPeer(peer1)][this.entierPeer(peer2)] ;
-	}
+	
+	
 	/**
 	 * la methode sontAmis(peer1, peer2), tres explicitement,
 	 * renvoie le booleen indiquant si oui ou non ils sont amis.
@@ -151,7 +172,11 @@ public class LiensAmis extends Process{
 	 * Tous les pairs ont pour nom "peer" + entierPeer.
 	 * @param args
 	 */
-	public int entierPeer(String peer){
+	public boolean sontAmis(String peer1, String peer2){
+		return topo[this.entierPeer(peer1)][this.entierPeer(peer2)] ;
+	}
+	
+	public int entierPeer(String peer){ //Convertit 
 		String str = peer.substring(4);
 		int entier = Integer.parseInt(str);
 		return entier;
@@ -163,7 +188,7 @@ public class LiensAmis extends Process{
 	 * @param args
 	 */
 	public void main(String[] args) throws MsgException{
-		// TODO Auto-generated method stub		
+
 		while(true){
 			if (Task.listen(this.mbox)){
 				Message msg = (Message) Task.receive(this.mbox);
