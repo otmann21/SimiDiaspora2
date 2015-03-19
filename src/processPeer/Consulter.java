@@ -18,24 +18,43 @@ import org.simgrid.msg.TransferFailureException;
 import taches.Message;
 import taches.typeMessage;
 
+/**
+ * La classe consulter permet de consulter du contenu publie par un pair ami.
+ * @author hugo
+ *
+ */
 public class Consulter extends Process{
 
-	int offset ; //decalage permettant la bonne synchronisation.
-
-	//On a dit que le process liensAmis tournait sur un SP "central". Il faut
-	//son nom (i e son adresse), pour aller le trouver et faire les verif.
-
+	/**
+	 * L'attribut offset est utilise pour la bonne synchronisation des process entre eux. Il permet d'attendre.
+	 */
+	int offset ;
+	/**
+	 * On garde dans la chaine SPAmi l'adresse du Super Peer gerant les liens d'amitie.
+	 */
 	String SPAmi ; 
 
-	String peer; //c'est de ce pair de qui on va consulter le mur.
-	String spWall; //spwall du peer en cours.
-	String mbox; //baL.
+	/**
+	 * Pair dont on consulte le mur.
+	 */
+	String peer;
 
 	/**
+	 * Adresse du Super Peer de gestion du mur du pair dont on consulte le mur.
+	 */
+	String spWall;
+
+	/**
+	 * C'est la boite au lettre du process. C'est ici qu'arrivent les messages.
+	 */
+	String mbox;
+
+	/**
+	 * Constructeur de la classe Consulter.
 	 * On passe donc en argument, apres l'host et le nom, l'offset, puis le peer qui veut consulter un mur.
-	 * @param host
-	 * @param name
-	 * @param args
+	 * @param host : Hote sur lequel tourne le process. 
+	 * @param name : Nom du process.
+	 * @param args : 
 	 */
 
 	public Consulter(Host host, String name, String[]args){
@@ -71,8 +90,8 @@ public class Consulter extends Process{
 		if (resultat){
 			ArrayList<String[]> lAmis2 = new ArrayList<String[]>();
 			lAmis2 = (ArrayList<String[]>) lAmis.getMessage(); 
-						this.peer = lAmis2.get(0)[0];
-						this.spWall = lAmis2.get(0)[1];
+			this.peer = lAmis2.get(0)[0];
+			this.spWall = lAmis2.get(0)[1];
 			//on choisi le premier peer ami a consulter.
 		}
 
