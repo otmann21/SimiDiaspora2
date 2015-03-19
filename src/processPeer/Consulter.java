@@ -71,9 +71,9 @@ public class Consulter extends Process{
 		if (resultat){
 			ArrayList<String[]> lAmis2 = new ArrayList<String[]>();
 			lAmis2 = (ArrayList<String[]>) lAmis.getMessage(); 
-			this.peer = lAmis2.get(0)[0];
-			this.spWall = lAmis2.get(0)[1];
-			//on a choisi le peer a consulter, le peer 0, qui est ami avec tout le monde.
+						this.peer = lAmis2.get(0)[0];
+						this.spWall = lAmis2.get(0)[1];
+			//on choisi le premier peer ami a consulter.
 		}
 
 		//		}

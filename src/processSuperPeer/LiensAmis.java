@@ -107,9 +107,10 @@ public class LiensAmis extends Process{
 			
 			for(int i=0 ; i<n;i++){
 				
-				for(int j=0 ; j<n;j++){
+				for(int j=0 ; j< i;j++){
 					if (Math.random()<proba){
 						topo[i][j] = true;
+						topo[j][i] = true;
 					}
 				}
 			}
@@ -206,7 +207,7 @@ public class LiensAmis extends Process{
 					reponse.isend(requete.getMboxReponse());
 					break;
 				case liste_ami:
-					//récupération des arguments et appel de la méthode sontAmis.
+					//récupération des arguments et appel de la méthode listeAmis.
 					Message<String> requete2 = msg;
 					String peer = requete2.getExpediteur();
 					ArrayList<String[]> rep2 = listeAmis(peer);
