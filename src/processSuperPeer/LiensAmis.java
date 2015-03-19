@@ -20,6 +20,8 @@ public class LiensAmis extends Process{
 	 *
 	 * @author hugo
 	 */
+	
+	
 	/**
 	 * Cet attribut est une matrice symetrique de booleens.
 	 * Si N est le nombre de peers,il possede N lignes et N collones.
@@ -27,23 +29,36 @@ public class LiensAmis extends Process{
 	 *
 	 */
 	boolean [][] topo;
+	
 	/**
 	 * C'est un annuaire qui contient la liste des couples (peers,SPWall) de tout le reseau.
 	 * Le peer_i est en position i dans la liste.
 	 */
 	HashMap<String, String> annuaire=new HashMap<String, String>();
 	
+	/**
+	 * mbox est la boite aux lettres sur laquelle on peut joindre le Super Peer LiensAmis.
+	 * Chaque peer a une boite aux lettres.
+	 */
 	private String mbox;
+	
+	/**
+	 * Nombre de peer du reseau.
+	 */
+	
 	int nbPeers ;
 	/**
-	 * Le constructeur prend en argument l'hote, le nom et le nombre de peers du reseau.
-	 *
-	 * On rempli ensuite le tableau topo n * n de facon raisonnable,
-	 * plausible et un peu aleatoire. Par exemple en generant un nombre
-	 * d'amis aleatoire.On a choisi en premier lieu de mettre tout le monde ami avec le peer0.
+	 * Le constructeur prend d'abord en argument l'hote et le nom.
+	 * Puis le tableau args, contenant : 
 	 * args 0 : nombre de peer.
 	 * args 1 : mode de remplissage.
 	 * Si on choisi le mode de remplissage numéro 1, on précise la proba dans l'argument d'apres.
+	 *
+	 * Les deux modes de remplissage sont les suivants :
+	 * 0 - Le pair 0 est ami avec tout le monde. On entre 0 pour cela.
+	 * 1 - Tous les pairs ont une probabilite p d'etre amis avec un autre pair.
+	 * Dans ce second mode, on passe la probabilite apres l'argument "1".
+	 * 
 	 * @param peer
 	 * @return
 	 */
