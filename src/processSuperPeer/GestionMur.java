@@ -51,8 +51,11 @@ public class GestionMur extends Process{
 
 	public void main(String[] arg0) throws MsgException {
 		while(true){
+			
 			if(Task.listen(this.mbox)){
+
 				Message msg = (Message) Task.receive(this.mbox);
+
 				switch(msg.getType()){
 				case requete_mur:
 					// il reste a verifier avec LiensAmis que les deux peers sont bien potes.
@@ -70,9 +73,11 @@ public class GestionMur extends Process{
 					Message<Boolean> confirmation = new Message<Boolean>(true, maj);
 					confirmation.setType(typeMessage.confirmation);
 					confirmation.isend(maj.getMboxReponse());
+
 					break;
 				}
 			}
+			Process.sleep(1);
 		}
 	}
 	
