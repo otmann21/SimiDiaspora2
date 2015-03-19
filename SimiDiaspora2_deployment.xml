@@ -16,16 +16,11 @@
 		<argument value="superpeer0" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
-<<<<<<< HEAD
 		<argument value="60" />
-=======
-		<argument value="10" />
->>>>>>> ff2e53e09b189fc1a8cfb62763250edba86826be
 		<argument value="Otmann est marrant" />
 		<argument value="superpeer0" />
 		<argument value="superpeer0" />
 	</process>
-<<<<<<< HEAD
 	<process host="peer0" function="processPeer.Publier">
 		<argument value="6000" />
 		<argument value="Hugo est brave" />
@@ -37,19 +32,6 @@
 		<argument value="superpeer0" />
 	</process>
 	<process host="peer1" function="processPeer.Consulter">
-=======
-		<process host="peer0" function="processPeer.Publier">
-		<argument value="6000" />
-		<argument value="Hugo est brave" />
-		<argument value="superpeer0" />
-		<argument value="superpeer0" />
-	</process>
-	<process host="peer1" function="processPeer.Consulter">
-		<argument value="500" />
-		<argument value="superpeer0" />
-	</process>
-	<process host="peer1" function="processPeer.Consulter">
->>>>>>> ff2e53e09b189fc1a8cfb62763250edba86826be
 		<argument value="7000" />
 		<argument value="superpeer0" />
 	</process>
