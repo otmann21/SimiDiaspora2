@@ -189,8 +189,7 @@ public class LiensAmis extends Process{
 	 * @param args
 	 */
 	public void main(String[] args) throws MsgException{
-		// TODO Auto-generated method stub
-		
+
 		while(true){
 			if (Task.listen(this.mbox)){
 				Message msg = (Message) Task.receive(this.mbox);

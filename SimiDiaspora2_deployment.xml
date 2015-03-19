@@ -10,22 +10,23 @@
 	</process>
 	<process host="superpeer1" function="processSuperPeer.LiensAmis">
 		<argument value="2" />
+		<argument value="0" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
 		<argument value="10" />
-		<argument value="Otmann est trop stylé" />
+		<argument value="J'aime le beurre salé." />
 		<argument value="superpeer0" />
 		<argument value="superpeer0" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
 		<argument value="60" />
-		<argument value="Otmann est marrant" />
+		<argument value="Le cidre c'est bien." />
 		<argument value="superpeer0" />
 		<argument value="superpeer0" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
 		<argument value="6000" />
-		<argument value="Hugo est brave" />
+		<argument value="Le kouign-amann c'est bon." />
 		<argument value="superpeer0" />
 		<argument value="superpeer0" />
 	</process>
