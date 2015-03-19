@@ -41,7 +41,7 @@ public class GestionContenu extends Process{
 	 * 'nomHost' + '_GestionContenu'
 	 */
 	private String mbox;
-	
+
 	/**
 	 * adresse du SP Liens amis, que l'on va devoir contacter.
 	 */
@@ -52,30 +52,7 @@ public class GestionContenu extends Process{
 
 		this.donnees = new HashMap<String, HashMap<String, String>>();
 		this.mbox = host.getName()+"_GestionContenu";
-	}
-	
-	public boolean verif(String peer1, String peer2) throws TransferFailureException, HostFailureException, TimeoutException{
-		boolean pairAmi = false ;
-		
-		
-		Message<String> verifAm = new Message();	//creation du message de requete à LiensAmi.
-		verifAm.setType(typeMessage.verif_ami);
-		verifAm.setPeerConcerne(peer1);
-		verifAm.setPeerConcerne2(peer2);
-		verifAm.isend(SPLiensAmis);
-
-
-		//On regarde si l'on reçoie le message.
-		if(Task.listen(mbox)){
-			Message msgVerif= (Message) Task.receive(mbox);
-			boolean resVerif = (msgVerif.getType()==typeMessage.reponse_sontAmis) && (msgVerif.getHashCodeMessagePrecedent()==verifAm.hashCode());
-			if ((resVerif)&&((boolean) msgVerif.getMessage())){
-				pairAmi = true;
-			}
-		}
-		
-		
-		return pairAmi;
+		this.SPLiensAmis = args[0];
 	}
 
 	public void main(String[] args) throws MsgException {
@@ -83,11 +60,17 @@ public class GestionContenu extends Process{
 			if(Task.listen(this.mbox)){
 
 				Message msg = (Message) Task.receive(this.mbox);				
-				
+
 				switch(msg.getType()){
 				case requete_publication:
 					Message<String> requete = msg;
-					String publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
+					String publication;
+					if(verif(requete.getPeerConcerne(), requete.getExpediteur())){
+						publication = reponseContenu(requete.getPeerConcerne(), requete.getMessage());
+					}
+					else{
+						publication = "ERR505 :Vous n'etes pas amis";
+					}
 					Message<String> reponse = new Message<String>(publication, requete);
 					reponse.setType(typeMessage.reponse_publication);
 					reponse.isend(requete.getMboxReponse());					
@@ -135,16 +118,38 @@ public class GestionContenu extends Process{
 	}
 
 	public String reponseContenu(String posteur, String hash){
-		
+
 		String reponse=null;
-		
+
 		if(donnees.containsKey(posteur)){
 			if(donnees.get(posteur).containsKey(hash)){
 				reponse = donnees.get(posteur).get(hash);
 			}
 		}
-		
+
 		return reponse;
+	}
+	
+	public boolean verif(String peer1, String peer2) throws TransferFailureException, HostFailureException, TimeoutException{
+		boolean pairAmi = false ;
+
+
+		Message<String> verifAm = new Message<String>();	//creation du message de requete à LiensAmi.
+		verifAm.setType(typeMessage.verif_ami);
+		verifAm.setPeerConcerne(peer1);
+		verifAm.setPeerConcerne2(peer2);
+		verifAm.setMboxReponse(this.mbox);
+		verifAm.isend(SPLiensAmis+"_LiensAmis");
+
+
+		//On regarde si l'on reçoie le message.
+
+		Message msgVerif= (Message) Task.receive(mbox);
+		boolean resVerif = (msgVerif.getType()==typeMessage.reponse_sontAmis) && (msgVerif.getHashCodeMessagePrecedent()==verifAm.hashCode());
+		if ((resVerif)&&((boolean) msgVerif.getMessage())){
+			pairAmi = true;
+		}
+		return pairAmi;
 	}
 
 }

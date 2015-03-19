@@ -3,10 +3,12 @@
 <platform version="3">
 	<!--add your mapping between process and hosts here -->
 	<process host="superpeer0" function="processSuperPeer.GestionContenu">
+	<argument value="superpeer1" />
 	</process>
 	<process host="superpeer0" function="processSuperPeer.GestionMur">
+	<argument value="superpeer1" />
 	</process>
-	<process host="superpeer0" function="processSuperPeer.LiensAmis">
+	<process host="superpeer1" function="processSuperPeer.LiensAmis">
 		<argument value="2" />
 	</process>
 	<process host="peer0" function="processPeer.Publier">
@@ -29,10 +31,10 @@
 	</process>
 	<process host="peer1" function="processPeer.Consulter">
 		<argument value="600" />
-		<argument value="superpeer0" />
+		<argument value="superpeer1" />
 	</process>
 	<process host="peer1" function="processPeer.Consulter">
 		<argument value="7000" />
-		<argument value="superpeer0" />
+		<argument value="superpeer1" />
 	</process>
 </platform>

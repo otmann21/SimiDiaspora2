@@ -3,11 +3,14 @@ package processSuperPeer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.simgrid.msg.HostFailureException;
 import org.simgrid.msg.Msg;
 import org.simgrid.msg.Process;
 import org.simgrid.msg.Host;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Task;
+import org.simgrid.msg.TimeoutException;
+import org.simgrid.msg.TransferFailureException;
 
 import taches.Message;
 import taches.typeMessage;
@@ -42,11 +45,17 @@ public class GestionMur extends Process{
 	 * @param args
 	 */
 	
+	/**
+	 * Le nomdu spLiensAmis a qui le spMur dira de quels peers il s'occupe.
+	 */
+	private String spLiensAmis;
+	
 	public GestionMur(Host host, String name, String[]args) {
 		super(host,name,args);
 		
 		this.donnees = new HashMap<String, ArrayList<String[]>>();
 		this.mbox = host.getName()+"_GestionMur";
+		this.spLiensAmis = args[0];
 	}
 
 	public void main(String[] arg0) throws MsgException {
@@ -81,11 +90,15 @@ public class GestionMur extends Process{
 		}
 	}
 	
-	public void ajoutPublicationDansMur(String expediteur, String hash, String superpeer_contenu){
+	public void ajoutPublicationDansMur(String expediteur, String hash, String superpeer_contenu) throws TransferFailureException, HostFailureException, TimeoutException{
 		
 		//si on n'a pas encore de donnees sur le mur du gars, on ajoute une entree
 		if(!donnees.containsKey(expediteur)){
 			donnees.put(expediteur, new ArrayList<String[]>());
+			Message<String> notif= new Message<String>();
+			notif.setType(typeMessage.notif_spMur);
+			notif.setPeerConcerne(expediteur);
+			notif.isend(spLiensAmis+"_LiensAmis");
 		}
 		
 		//on ajoute la donnee dans la liste de l'expediteur

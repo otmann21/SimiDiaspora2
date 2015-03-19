@@ -43,8 +43,6 @@ public class LiensAmis extends Process{
 	public LiensAmis(Host host, String name, String[]args){
 		super(host, name, args);
 		mbox = host.getName()+"_LiensAmis";
-		//La ligne de gros CHEAT
-		annuaire.put("peer0", "superpeer0");
 		int n = Integer.parseInt(args[0]);
 		//On doit donc donner en premier argument de args le nombre de pairs du réseau.
 		this.nbPeers = n ;
@@ -122,7 +120,7 @@ public class LiensAmis extends Process{
 					String peer2 = requete.getPeerConcerne2();
 					boolean rep = sontAmis(peer1, peer2);
 					//création et envoi du message au SP.
-					Message reponse = new Message(rep);
+					Message<Boolean> reponse = new Message<Boolean>(rep, requete);
 					reponse.setType(typeMessage.reponse_sontAmis);
 					reponse.isend(requete.getMboxReponse());
 					break;
@@ -136,14 +134,9 @@ public class LiensAmis extends Process{
 					reponse2.setType(typeMessage.reponse_listeAmis);
 					reponse2.isend(requete2.getMboxReponse());
 					break;
-				case demandeSPWall:
-					//récupération des arguments et appel de la méthode consulterAnnuaire.
-					String peerAChercher =(String) msg.getMessage();
-					String SPWallduPeer = this.consulterAnnuaire(peerAChercher);
-					//création et envoi du message au process consulter.
-					Message<String> repSP = new Message<String>(SPWallduPeer);
-					repSP.setType(typeMessage.reponseSPWall);
-					repSP.isend(msg.getExpediteur());
+				case notif_spMur:
+					Message<String> notif = msg;
+					this.annuaire.put(notif.getPeerConcerne(), notif.getExpediteur());
 					break;
 				}
 			}
